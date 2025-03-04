@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $parroquia
  * @property string $calle
  * @property Carbon $created_at
- * @property Carbon $update_at
+ * @property Carbon $updated_at
  * 
  * @property Collection|Pedido[] $pedidos
  *
@@ -39,14 +39,12 @@ class Cliente extends Model
 	protected $table = 'clientes';
 	protected $primaryKey = 'ci';
 	public $incrementing = false;
-	public $timestamps = false;
 
 	protected $casts = [
 		'ci' => 'int',
 		'dia_n' => 'int',
 		'mes_n' => 'int',
-		'anio_n' => 'int',
-		'update_at' => 'datetime'
+		'anio_n' => 'int'
 	];
 
 	protected $hidden = [
@@ -66,8 +64,7 @@ class Cliente extends Model
 		'anio_n',
 		'municipio',
 		'parroquia',
-		'calle',
-		'update_at'
+		'calle'
 	];
 
 	public function pedidos()

@@ -23,8 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
- * @property Collection|Pedido[] $pedidos
  * @property Collection|Contorno[] $contornos
+ * @property Collection|Pedido[] $pedidos
  *
  * @package App\Models
  */
@@ -48,15 +48,17 @@ class Producto extends Model
 		'imagen'
 	];
 
+	public function contornos()
+	{
+		return $this->belongsToMany(Contorno::class, 'productos_by_contornos', 'id_producto', 'id_contorno')
+					->withPivot('id_producto_by_contorno')
+					->withTimestamps();
+	}
+
 	public function pedidos()
 	{
 		return $this->belongsToMany(Pedido::class, 'productos_by_pedidos', 'id_producto', 'id_pedido')
 					->withPivot('id_producto_by_pedido', 'cantidad')
 					->withTimestamps();
-	}
-
-	public function contornos()
-	{
-		return $this->belongsToMany(Contorno::class, 'productos_contornos', 'id_producto', 'id_contorno');
 	}
 }
