@@ -1,0 +1,156 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #003366;
+    color: white;
+    padding: 1px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.header-logo {
+    height: 100px;
+    margin-left: 40px;
+}
+
+.hk {
+    font-size: 44px;
+    margin-right: 40%;
+}
+
+.desktop-nav {
+    display: flex;
+    align-items: center;
+}
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.header-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.header-nav li {
+    margin: 0 10px;
+}
+
+.header-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.header-nav a:hover {
+    background-color: #0055cc;
+}
+.mobile-menu-icon {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    display: none;
+    flex-direction: column;
+    background-color: #003366;
+    padding: 10px;
+}
+
+.mobile-nav .header-nav {
+    flex-direction: column;
+}
+
+.mobile-nav .header-nav li {
+    margin-bottom: 10px;
+}
+
+
+        .filter-container {
+            margin: 20px;
+            text-align: center;
+        }
+        .filter-container input[type="date"] {
+            padding: 5px;
+        }
+        .order-history {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .order-history th, .order-history td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .order-history th {
+            background-color: #003366;
+            color: white;
+        }
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        h1 {
+            font-size: 3em; /* Tamaño grande para el encabezado */
+        }
+    
+    footer {
+        background-color: #003366; /* Azul oscuro */
+        color: white;
+        text-align: center;
+        padding: 1px 0px; /* Reduce el padding para hacer el footer más delgado */
+        position: relative; /* Cambia a relative si necesitas que se ajuste al contenido */
+        bottom: 0;
+        width: 100%;
+      }
+      .footer-container {
+        max-width: 700px; /* Ancho máximo del contenido */
+        margin: 0 auto; /* Centrar el contenedor */
+        padding: 0 10px; /* Espaciado horizontal */
+      }
+      
+      .footer-row {
+        display: flex;
+        justify-content: space-between; /* Espacio entre columnas */
+        flex-wrap: wrap; /* Permitir que las columnas se ajusten en pantallas pequeñas */
+      }
+      
+      .footer-col {
+        flex: 1; /* Cada columna ocupa el mismo espacio */
+        min-width: 100px; /* Ancho mínimo para las columnas */
+        margin-bottom: 5px; /* Espaciado entre filas reducido */
+      }
+      
+      .footer-col h5 {
+        margin-bottom: 3px; /* Espaciado debajo del título reducido */
+      }
+      
+      .footer-bottom {
+        margin-top: 10px; /* Espacio arriba del pie inferior reducido */
+      }
+      
+      .footer-bottom p {
+        margin: 5px 0; /* Espaciado entre líneas en el pie inferior reducido */
+      }

@@ -1,0 +1,119 @@
+/* Estilos para el contenedor principal */
+.main-container {
+    display: flex; /* Usar flexbox */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: normal; /* Centrar verticalmente */
+    height: 100vh; /* Altura completa de la ventana */
+}
+
+/* Estilos para el contenido */
+.content_ {
+    flex: 1;
+    width: 260px;
+    padding: 30px 10px;
+    background-color: #ffffff;
+    margin-left: 25px; /* Puedes ajustar esto según sea necesario */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Otros estilos */
+.contenedor-productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.producto-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    cursor: pointer; /* Cambiar cursor al pasar sobre la tarjeta */
+    transition: box-shadow 0.3s; /* Efecto de sombra al pasar el mouse */
+}
+
+.producto-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra al pasar el mouse */
+}
+
+/* Estilos para el modal */
+.modal {
+    display: none; /* Ocultar el modal por defecto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* Centrar el modal */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ancho del modal */
+    max-width: 500px; /* Ancho máximo del modal */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.close-btn {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #000; /* Color al pasar el mouse */
+}
+
+.modal-button {
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Efecto de transición */
+}
+
+.modal-button:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+.modal-buttons {
+    margin-top: 20px; /* Espacio entre el contenido y los botones */
+    display: flex; /* Usar flexbox para alinear los botones */
+    justify-content: space-between; /* Espacio entre los botones */
+}
+
+.mark-as-button {
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+.mark-as-button_ {
+    background-color: #1e9d55; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+.mark-as-button:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+.mark-as-button_:hover {
+    background-color: #0a692e; /* Color de fondo al pasar el mouse */
+}

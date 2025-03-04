@@ -1,0 +1,152 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background-color: beige; /* Color de fondo suave */
+}
+
+.input-container {
+  display: inline-block;
+  margin-right: 1px;
+}
+
+select,
+input[type="number"] {
+  width: 100px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+
+.logo img {
+  width: 130px; /* Ajusta según el tamaño del logo */
+  margin-right: 9px;
+} 
+.j{
+  color: #000;
+}
+h1{
+  color: white;
+  font-size: 44px;
+}
+.form-container {
+  max-width: 600px; /* Ancho máximo del contenedor */
+  margin: 40px auto; /* Centrar el contenedor */
+  padding: 20px;
+  background-color: white; /* Fondo blanco para los formularios */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+h2 {
+  text-align: center; /* Centrar título */
+}
+
+.user-type-buttons {
+  display: flex;
+  justify-content: space-around; /* Espacio entre botones */
+}
+
+.b{
+  padding: 10px 20px; /* Espaciado interno del botón */
+  margin-top: 30px; /* Espacio arriba del botón */
+  background-color: #00509e; /* Color del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+  
+
+  
+  
+}
+
+.htt{
+  color: white; /* Color del texto del botón */
+  text-decoration: none; /* Elimina el subrayado */
+}
+
+.user-type-buttons button:hover {
+  background-color: #007acc; /* Color más claro al pasar el mouse sobre el botón */
+}
+
+label {
+  display: block; /* Hacer que las etiquetas ocupen toda la línea */
+  margin-top: 10px; /* Espacio arriba de las etiquetas */
+}
+
+input, select {
+  width: 96%; /* Ancho completo del campo */
+  padding: 10px; /* Espaciado interno */
+  margin-top: 20px;
+  border-radius: 5px; /* Bordes redondeados */
+  border: 1px solid #ccc; /* Borde gris claro */
+}
+
+.btn-login, .btn-register {
+  width: 100%; /* Botón ocupa todo el ancho disponible */
+  padding: 10px; /* Espaciado interno del botón */
+  margin-top: 20px; /* Espacio arriba del botón */
+  background-color: #00509e; /* Color del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+.botonlog{
+  color: white; /* Color del texto del botón */
+  cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+
+}
+
+.btn-login:hover, .btn-register:hover {
+  background-color: #007acc; /* Color más claro al pasar el mouse sobre el botón */
+}
+
+#errorMessage {
+ color: red;
+ display: none;
+}
+
+footer {
+  background-color: #003366; /* Azul oscuro */
+  color: white;
+  text-align: center;
+  padding: 5px 0; /* Reduce el padding para hacer el footer más delgado */
+  position: relative; /* Cambia a relative si necesitas que se ajuste al contenido */
+  bottom: 0;
+  width: 100%;
+}
+.footer-container {
+  max-width: 700px; /* Ancho máximo del contenido */
+  margin: 0 auto; /* Centrar el contenedor */
+  padding: 0 10px; /* Espaciado horizontal */
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between; /* Espacio entre columnas */
+  flex-wrap: wrap; /* Permitir que las columnas se ajusten en pantallas pequeñas */
+}
+
+.footer-col {
+  flex: 1; /* Cada columna ocupa el mismo espacio */
+  min-width: 100px; /* Ancho mínimo para las columnas */
+  margin-bottom: 5px; /* Espaciado entre filas reducido */
+}
+
+.footer-col h5 {
+  margin-bottom: 3px; /* Espaciado debajo del título reducido */
+}
+
+.footer-bottom {
+  margin-top: 10px; /* Espacio arriba del pie inferior reducido */
+}
+
+.footer-bottom p {
+  margin: 5px 0; /* Espaciado entre líneas en el pie inferior reducido */
+}
+.logo {
+  display: flex;
+  align-items: center;
+  color: white;
+}

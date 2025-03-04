@@ -1,0 +1,409 @@
+/* Notification Icon Styles */
+.notification-icon {
+    position: relative; /* Para posicionar las notificaciones correctamente */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
+    margin-left: 899px; /* Ajusta la posición horizontal del contador de alertas */
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px; /* Ajusta la posición vertical del contador de alertas */
+    right: -10px; /* Ajusta la posición horizontal del contador de alertas */
+}
+
+#alertas {
+    display: none; /* Cambiar a 'block' para mostrar las alertas */
+    background-color: rgba(248, 215, 218, 0.9); /* Fondo semi-transparente */
+    color: #721c24;
+    border-radius: 0.4rem;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    position: absolute; /* Para que aparezca sobre otros elementos */
+    right: 100px; /* Alineado a la derecha del contenedor de notificación */
+    top: calc(
+        9% + 10px
+    ); /* Coloca la alerta justo debajo del ícono con un margen de separación */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Alert Styles */
+#alertas p {
+    margin-bottom: 0.5rem; /* Espacio entre las alertas */
+}
+/* Main Content */
+main {
+    flex: 1 0 auto;
+    display: flex;
+    padding: 20px;
+}
+
+.admin-interface {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 25%;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.admin-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-menu li {
+    margin-bottom: 20px;
+}
+
+.admin-menu a {
+    color: #003366;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-menu a:hover {
+    background-color: #e9f4ff;
+}
+
+/* Content Section Styles */
+.content {
+    flex: 1;
+    padding: 30px 10px;
+    background-color: #ffffff;
+    margin-left: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 44px;
+    margin-left: 0, 56%;
+}
+
+.hk {
+    /* Eliminar margen por defecto */
+    font-size: 48px;
+}
+
+/* Notification Icon Styles */
+.notification-icon {
+    position: relative; /* Para posicionar las notificaciones correctamente */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
+    margin-left: 899px; /* Ajusta la posición horizontal del contador de alertas */
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px; /* Ajusta la posición vertical del contador de alertas */
+    right: -10px; /* Ajusta la posición horizontal del contador de alertas */
+}
+
+#alertas {
+    display: none; /* Cambiar a 'block' para mostrar las alertas */
+    background-color: rgba(248, 215, 218, 0.9); /* Fondo semi-transparente */
+    color: #721c24;
+    border-radius: 0.4rem;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    position: absolute; /* Para que aparezca sobre otros elementos */
+    right: 100px; /* Alineado a la derecha del contenedor de notificación */
+    top: calc(
+        9% + 10px
+    ); /* Coloca la alerta justo debajo del ícono con un margen de separación */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Alert Styles */
+#alertas p {
+    margin-bottom: 0.5rem; /* Espacio entre las alertas */
+}
+/* Main Content */
+main {
+    flex: 1 0 auto;
+    display: flex;
+    padding: 20px;
+}
+
+.admin-interface {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 25%;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.admin-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-menu li {
+    margin-bottom: 20px;
+}
+
+.admin-menu a {
+    color: #003366;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-menu a:hover {
+    background-color: #e9f4ff;
+}
+
+/* Content Section Styles */
+.content {
+    flex: 1;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    margin-left: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+    font-size: 24px;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ccc;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #003366;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.btn1 {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn1:hover {
+    background-color: #0055cc;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-interface {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .content {
+        padding: 20px;
+        margin-left: 0;
+    }
+}
+
+.hidden {
+    display: none; /* Ocultar elementos con esta clase */
+}
+
+.filter-container {
+    margin-bottom: 20px; /* Espacio debajo del filtro */
+}
+
+.filter-container label {
+    font-size: 18px; /* Tamaño de fuente */
+    color: #003366; /* Color del texto */
+}
+
+.filter-container select {
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    border: 1px solid #ccc; /* Borde gris claro */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    margin-bottom: 20px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Centrado de la sección principal */
+.centered-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Hace que la sección ocupe toda la altura de la ventana */
+}
+
+.order-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.order-list a {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.order-list a:hover {
+    background-color: #0b1a2b;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 2px;
+    border: 1px solid #b5b1b1;
+    width: 8px; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+

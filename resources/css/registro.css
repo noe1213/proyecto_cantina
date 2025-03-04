@@ -1,0 +1,72 @@
+.product-form {
+    max-width: 600px; /* Ancho máximo del contenedor */
+  margin: 40px auto; /* Centrar el contenedor */
+  padding: 20px;
+  background-color: white; /* Fondo blanco para los formularios */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+.product-form label {
+    font-weight: bold; /* Negrita para las etiquetas */
+    color: #333; /* Color del texto */
+}
+
+.product-form input {
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    width: 100%; /* Ancho completo */
+    margin-top: 5px; /* Margen superior */
+    box-sizing: border-box; /* Incluir padding y border en el ancho total */
+}
+
+.input-group {
+    display: flex; /* Usar flexbox para alinear los inputs */
+    margin-bottom: 15px; /* Espacio entre grupos de inputs */
+}
+
+.input-half {
+    flex: 1; /* Cada input ocupa la mitad del espacio */
+    margin-right: 10px; /* Espacio a la derecha */
+}
+
+.input-half:last-child {
+    margin-right: 0; /* Sin margen derecho para el último input */
+}
+
+.input-full {
+    flex: 1; /* Ancho completo para el input */
+}
+
+.botones {
+    margin-top: 20px; /* Espacio superior para los botones */
+    display: flex; /* Usar flexbox para alinear los botones */
+    justify-content: space-between; /* Espacio entre los botones */
+}
+
+.guardar-btn {
+    background-color: #28a745; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+
+.eliminar-btn {
+    background-color: #dc3545; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+
+.guardar-btn:hover {
+    background-color: #218838; /* Color de fondo al pasar el mouse */
+}
+
+.eliminar-btn:hover {
+    background-color: #c82333; /* Color de fondo al pasar el mouse */
+}

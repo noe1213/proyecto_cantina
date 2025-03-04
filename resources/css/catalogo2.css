@@ -1,0 +1,337 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+
+.search {
+    display: flex;
+    align-items: center;
+    margin-left: 9px;
+}
+
+.search input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+}
+
+.search button {
+    background-color: #0055cc;
+    border: none;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.header-nav a:hover {
+    background-color: #0055cc;
+}
+
+.cart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 7px;
+}
+
+.cart-container i {
+    font-size: 24px;
+    color: white;
+}
+a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: white;
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    
+    .search, .cart-container {
+        margin: 10px 0;
+    }
+}
+
+.cart-container .cart-count {
+    background-color: rgb(55, 188, 61);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 14px;
+}
+
+/* Main content styles */
+#contenido {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.product-section {
+    margin-top: 40px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+.product h4 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.product p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.product label {
+    font-size: 14px;
+    color: #333;
+}
+
+.product .acompanamiento {
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.product button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.product button:hover {
+    background-color: #0055cc;
+}
+
+/* Cart Window Styles */
+.cart-window {
+    position: fixed;
+    right: -320px; /* Initially hidden */
+    top: 10%;
+    width: 280px; /* Smaller width */
+    height: 60%; /* Smaller height */
+    background-color: rgba(255, 255, 255, 0.8); /* More transparent background */
+    border-left: 1px solid #ccc;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    transition: right 0.3s ease;
+    border-radius: 8px; /* Rounded corners */
+}
+
+.cart-window h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cart-window ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.cart-window ul li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.cart-window .cart-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.cart-window button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-window button:hover {
+    background-color: #0055cc;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: darkred;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .product {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product img {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav a {
+        margin-bottom: 10px;
+    }
+
+    .search, .cart-container {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .cart-window {
+        right: -280px; /* Adjusted for smaller screens */
+        width: 240px; /* Smaller width for smaller screens */
+        height: 70%; /* Adjusted height for smaller screens */
+    }
+}
+.category-item {
+    text-align: center; /* Centrar texto */
+    margin: 40px; 
+}
+
+.icon-button {
+    background-color: transparent; /* Fondo transparente para que solo se vea el ícono */
+    border: none; 
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+
+.icon {
+    font-size: 80px; /* Ajusta este valor para cambiar el tamaño del ícono */
+    color: #003366; /* Color del ícono */
+}
+.hola{
+  
+    margin-top: 5px; /* Espacio entre el botón y el texto */
+    font-size: 80px; /* Tamaño del texto */
+    color: #003366; /* Color del texto */
+}
+footer {
+    background-color: #003366; /* Azul oscuro */
+    color: white;
+    text-align: center;
+    padding: 5px 0; /* Reduce el padding para hacer el footer más delgado */
+    position: relative; /* Cambia a relative si necesitas que se ajuste al contenido */
+    bottom: 0;
+    width: 100%;
+  }
+  .footer-container {
+    max-width: 700px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 0 10px; /* Espaciado horizontal */
+  }
+  
+  .footer-row {
+    display: flex;
+    justify-content: space-between; /* Espacio entre columnas */
+    flex-wrap: wrap; /* Permitir que las columnas se ajusten en pantallas pequeñas */
+  }
+  
+  .footer-col {
+    flex: 1; /* Cada columna ocupa el mismo espacio */
+    min-width: 100px; /* Ancho mínimo para las columnas */
+    margin-bottom: 5px; /* Espaciado entre filas reducido */
+  }
+  
+  .footer-col h5 {
+    margin-bottom: 3px; /* Espaciado debajo del título reducido */
+  }
+  
+  .footer-bottom {
+    margin-top: 10px; /* Espacio arriba del pie inferior reducido */
+  }
+  
+  .footer-bottom p {
+    margin: 5px 0; /* Espaciado entre líneas en el pie inferior reducido */
+  }
+  .tam{
+    font-size: 30px;
+  }
+  
+  
+.tipo{
+   
+    color: rgb(0, 0, 0);
+    background-color: rgba(187, 196, 245, 0.8); /* More transparent background */
+    border-left: 1px solid #ccc;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; 
+}  
+

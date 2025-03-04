@@ -1,0 +1,35 @@
+.navbar {
+    overflow: hidden;
+    background-color: blueviolet;
+  }
+  
+  .navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 30px 89px;
+    text-decoration: none;
+  }
+  
+  .navbar a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  body{
+    background-image: url("libro.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+fieldset{
+    background:#00001ad2;
+    color:white;
+    margin:100px;
+    text-overflow: clip;
+    font-size: 20px;
+  }
+  span{
+    text-align: center;
+  }

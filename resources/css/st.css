@@ -1,0 +1,233 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color:#f4f4f4;
+}
+
+header {
+    background-color: #003366;
+    color: white;
+    padding: 1px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+h1 {
+    font-size: 3em; /* Tamaño grande para el encabezado */
+}
+main {
+    padding-top: 20px; /* Espaciado superior para el contenido */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+
+.logo img {
+    width: 130px; /* Ajusta según el tamaño del logo */
+    margin-right: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+
+.btn-login  {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-size: 28px;
+        padding: 4px ;
+        border-radius: 6px;
+    }
+    
+.btn-login:hover {
+    background-color: cornflowerblue; /* Color más claro al pasar el mouse */
+    transform: scale(1.05); /* Aumentar ligeramente el tamaño */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+}
+
+.btn-login:active {
+    transform: scale(0.95); /* Reducir tamaño al hacer clic */
+}
+.slider {
+    height: 400px; /* Ajusta la altura del slider para hacerlo más rectangular */
+    overflow: hidden; /* Oculta cualquier contenido que sobresalga del contenedor */
+    border-radius: 19px;
+ }
+ .slides img {
+    width: 400vw; /* Ancho completo de la ventana */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 19px;
+}
+
+.slides {
+    display: flex;
+}
+
+.slides img {
+    height: auto; /* Mantiene la proporción de las imágenes */
+    max-height: 400px; /* Limita la altura máxima de las imágenes dentro del slider */
+    border-radius: 19px;
+    
+}
+
+.slider-btn {
+    position: absolute;
+    top: 57%;
+    transform: translateY(-50%);
+    background-color:#f4f4f4;
+    border-radius: 19px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#prevBtn {
+    left: 10px;
+}
+
+#nextBtn {
+    right: 10px;
+}
+
+.info {
+    text-align: center; /* Centrar texto */
+    padding: 10px;
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+.welcome-container {
+    margin-bottom: 30px; /* Espacio entre el contenedor de bienvenida y el resto */
+    font-size: 16px;
+}
+
+.title {
+    font-size: 40px;
+    color: #003366; /* Color del título */
+}
+
+.welcome-text {
+    font-size: 1.2em;
+    margin: 10px 0; /* Espaciado entre párrafos */
+}
+
+.separator-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar contenido */
+    margin-top: 20px; /* Margen superior */
+}
+
+.additional-text {
+    width: 30%; /* Ancho de las columnas */
+    padding: 10px; /* Espaciado interno */
+}
+
+.separator-image {
+    width: 30%; /* Ancho de la imagen */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.testimonials {
+    margin-top: 30px; /* Margen superior */
+}
+
+.testimonials h2 {
+    margin-bottom: 15px; /* Espacio debajo del título */
+}
+
+
+
+footer {
+    background-color: #003366; /* Azul oscuro */
+    color: white;
+    padding: 10px 0; /* Espaciado vertical reducido */
+    text-align: center; /* Centrar texto */
+}
+
+.footer-container {
+    max-width: 1200px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 0 20px; /* Espaciado horizontal */
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between; /* Espacio entre columnas */
+    flex-wrap: wrap; /* Permitir que las columnas se ajusten en pantallas pequeñas */
+}
+
+.footer-col {
+    flex: 1; /* Cada columna ocupa el mismo espacio */
+    min-width: 150px; /* Ancho mínimo para las columnas */
+    margin-bottom: 5px; /* Espaciado entre filas reducido */
+}
+
+.footer-col h5 {
+    margin-bottom: 5px; /* Espaciado debajo del título reducido */
+}
+
+.footer-bottom {
+    margin-top: 10px; /* Espacio arriba del pie inferior reducido */
+}
+
+.footer-bottom p {
+    margin: 5px 0; /* Espaciado entre líneas en el pie inferior reducido */
+}
+.welcome-title {
+    font-size: 3.5em; /* Tamaño de fuente grande para el título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+.welcome-text {
+    font-size: 1.5em; /* Tamaño de fuente más grande para los párrafos */
+    margin-bottom: 15px; /* Espacio entre párrafos */
+}
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+        align-items: flex-start; /* Alinear a la izquierda */
+    }
+}
+.category-list {
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+    flex-wrap: wrap;
+}
+
+.category-item {
+    text-align: center; /* Centrar texto */
+    margin: 40px; 
+}
+
+.icon-button {
+    background-color: transparent; /* Fondo transparente para que solo se vea el ícono */
+    border: none; 
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+
+.icon {
+    font-size: 50px; /* Ajusta este valor para cambiar el tamaño del ícono */
+    color: #003366; /* Color del ícono */
+}
+
+.category-item span {
+    display: block; /* Asegura que el texto esté en una nueva línea */
+    margin-top: 5px; /* Espacio entre el botón y el texto */
+    font-size: 30px; /* Tamaño del texto */
+    color: #003366; /* Color del texto */
+}

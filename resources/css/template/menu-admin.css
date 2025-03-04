@@ -1,0 +1,60 @@
+.admin-interface {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    /* Ancho de la barra lateral */
+    background-color: #f8f9fa;
+    /* Color de fondo */
+    padding: 20px;
+    /* Espaciado interno */
+    border-right: 1px solid #ccc;
+    /* Línea de separación */
+    height: 80vh;
+    /* Altura completa de la ventana */
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    /* Tamaño de fuente del título */
+    margin-bottom: 20px;
+    /* Espacio debajo del título */
+    color: #333;
+    /* Color del texto */
+}
+
+.admin-menu {
+    list-style: none;
+    /* Sin viñetas */
+    padding: 0;
+    /* Sin padding */
+}
+
+.admin-menu li {
+    margin-bottom: 10px;
+    /* Espacio entre los elementos del menú */
+}
+
+.admin-menu a {
+    text-decoration: none;
+    /* Sin subrayado */
+    color: black;
+    /* Color del texto */
+    font-weight: bold;
+    /* Negrita */
+    display: flex;
+    /* Para alinear icono y texto */
+    align-items: center;
+    /* Centrar verticalmente */
+}
+
+.admin-menu a:hover {
+    color: #0056b3;
+    /* Color al pasar el mouse */
+}
+
+.admin-menu a i {
+    margin-right: 8px;
+    /* Espacio entre el icono y el texto */
+}

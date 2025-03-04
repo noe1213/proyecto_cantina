@@ -1,0 +1,287 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* Main Content */
+main {
+    flex: 1 0 auto;
+}
+
+/* Header Styles */
+header {
+    background-color: #003366;
+    color: white;
+    padding: 1px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.header-logo {
+    height: 90px;
+    margin-left: 30%;
+}
+
+h1 {
+    font-size: 44px;
+    margin-right: 10%;
+}
+.hk {
+    font-size: 44px;
+    margin-right: 50%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.header-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.header-nav li {
+    margin: 0 10px;
+}
+
+.header-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.header-nav a:hover {
+    background-color: #0055cc;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.search input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+.search button {
+    background-color: #0055cc;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.cart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.cart-container i {
+    font-size: 24px;
+    color: white;
+}
+
+.cart-container .cart-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 14px;
+}
+
+/* Comments Section Styles */
+#comentarios {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.comment-form, .comments-list {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.comment-form h3, .comments-list h3 {
+    margin-top: 0;
+}
+
+.comment-form .form-group, .comments-list .form-group {
+    margin-bottom: 15px;
+}
+
+.comment-form label, .comments-list label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.comment-form input, .comment-form textarea, .comment-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.comment-form button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0055cc;
+}
+
+.comments-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comments-list li {
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.comments-list h4 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+.comments-list p {
+    margin: 5px 0;
+}
+
+footer {
+    background-color: #003366; /* Azul oscuro */
+    color: white;
+    text-align: center;
+    padding: 1px 0px; /* Reduce el padding para hacer el footer más delgado */
+    position: relative; /* Cambia a relative si necesitas que se ajuste al contenido */
+    bottom: 0;
+    width: 100%;
+  }
+  .footer-container {
+    max-width: 700px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 0 10px; /* Espaciado horizontal */
+  }
+  
+  .footer-row {
+    display: flex;
+    justify-content: space-between; /* Espacio entre columnas */
+    flex-wrap: wrap; /* Permitir que las columnas se ajusten en pantallas pequeñas */
+  }
+  
+  .footer-col {
+    flex: 1; /* Cada columna ocupa el mismo espacio */
+    min-width: 100px; /* Ancho mínimo para las columnas */
+    margin-bottom: 5px; /* Espaciado entre filas reducido */
+  }
+  
+  .footer-col h5 {
+    margin-bottom: 3px; /* Espaciado debajo del título reducido */
+  }
+  
+  .footer-bottom {
+    margin-top: 10px; /* Espacio arriba del pie inferior reducido */
+  }
+  
+  .footer-bottom p {
+    margin: 5px 0; /* Espaciado entre líneas en el pie inferior reducido */
+  }
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    h1 {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .header-nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search, .cart-container {
+        margin: 10px 0;
+    }
+    
+    .form-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-image-deco {
+        display: none;
+    }
+    
+    #comentarios {
+        padding: 10px;
+    }
+
+    .comment-form, .comments-list {
+        padding: 15px;
+    }
+
+    .comment-form input, .comment-form textarea, .comment-form select {
+        font-size: 14px;
+    }
+
+    .comment-form button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
