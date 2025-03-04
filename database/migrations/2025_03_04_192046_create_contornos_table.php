@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contornos', function (Blueprint $table) {
-            $table->integer('id_contorno', true);
+            $table->bigInteger('id_contorno', true);
             $table->string('nombre_contorno');
             $table->text('descripcion')->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
