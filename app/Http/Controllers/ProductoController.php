@@ -20,7 +20,6 @@ class ProductoController extends Controller
         $request->validate([
             'nombre_producto' => 'required|string|max:255',
             'precio_producto' => 'required|numeric',
-            'contorno_comida' => 'nullable|string|max:255',
             'categoria_producto' => 'required|string|max:255',
             'stock_producto' => 'required|integer',
             'stock_minimo' => 'required|integer',
@@ -31,7 +30,6 @@ class ProductoController extends Controller
         $producto = new Producto();
         $producto->nombre_producto = $request->nombre_producto;
         $producto->precio_producto = $request->precio_producto;
-        $producto->contorno_comida = $request->contorno_comida;
         $producto->categoria_producto = $request->categoria_producto;
         $producto->stock_producto = $request->stock_producto;
         $producto->stock_minimo = $request->stock_minimo;
@@ -48,7 +46,6 @@ class ProductoController extends Controller
         $request->validate([
             'nombre_producto' => 'required|string|max:255',
             'precio_producto' => 'required|numeric',
-            'contorno_comida' => 'nullable|string|max:255',
             'categoria_producto' => 'required|string|max:255',
             'stock_producto' => 'required|integer',
             'stock_minimo' => 'required|integer',
@@ -60,7 +57,6 @@ class ProductoController extends Controller
         // Actualizar los campos
         $producto->nombre_producto = $request->nombre_producto;
         $producto->precio_producto = $request->precio_producto;
-        $producto->contorno_comida = $request->contorno_comida;
         $producto->categoria_producto = $request->categoria_producto;
         $producto->stock_producto = $request->stock_producto;
         $producto->stock_minimo = $request->stock_minimo;

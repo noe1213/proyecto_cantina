@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 // Función para obtener los productos al cargar la página
 function fetchProducts() {
     fetch("/api/productos")
@@ -20,17 +21,12 @@ function addProductToTable(product) {
         
         <td>${product.nombre_producto}</td>
         <td>${product.precio_producto}</td>
-        <td>${product.contorno_comida || "N/A"}</td>
         <td>${product.categoria_producto}</td>
         <td>${product.stock_producto}</td>
         <td>${product.stock_minimo}</td>
         <td>
-            <button class="edit-button" onclick="editProduct(${
-                product.id_producto
-            })">Editar</button>
-            <button class="delete-button" onclick="deleteProduct(${
-                product.id_producto
-            })">Eliminar</button>
+            <button class="edit-button" onclick="editProduct(${product.id_producto})">Editar</button>
+            <button class="delete-button" onclick="deleteProduct(${product.id_producto})">Eliminar</button>
         </td>
     `;
     productList.appendChild(row);
@@ -111,6 +107,7 @@ document
                 return response.json();
             })
             .then((data) => {
+                Swal.fire({ title: "Producto guardado!", icon: "success" });
                 console.log("Producto guardado:", data);
                 // Aquí puedes agregar lógica para mostrar un mensaje de éxito o limpiar el formulario
                 document.getElementById("product-form").reset(); // Limpiar el formulario
