@@ -14,7 +14,11 @@
 
     <div class="content">
         <h2 class="section-title">Registrar una cuenta</h2>
+<<<<<<< HEAD
         <form id="registration-form" class="product-form" method="POST" action="{{ route('registro.store') }}" enctype="multipart/form-data">
+=======
+        <form id="registration-form" class="product-form" method="POST" action="#" enctype="multipart/form-data">
+>>>>>>> 86a2021f577fd31c6d1a217dbdcddc4f39302260
             @csrf
 
             <!-- Grupo de cédula y correo -->
@@ -61,7 +65,12 @@
                 </div>
                 <div class="input-half">
                     <label for="anio_n">Año de Nacimiento</label>
+<<<<<<< HEAD
                     <input type="number" id="anio_n" name="anio_n" min="1900" max="2100" required placeholder="Ej: 1990">
+=======
+                    <input type="number" id="anio_n" name="anio_n" min="1900" max="2100" required
+                        placeholder="Ej: 1990">
+>>>>>>> 86a2021f577fd31c6d1a217dbdcddc4f39302260
                 </div>
             </div>
 
@@ -124,4 +133,8 @@
     <x-footer></x-footer>
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 86a2021f577fd31c6d1a217dbdcddc4f39302260

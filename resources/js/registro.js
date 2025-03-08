@@ -96,4 +96,8 @@ form.addEventListener("submit", function (event) {
                 });
             }
         });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 86a2021f577fd31c6d1a217dbdcddc4f39302260
