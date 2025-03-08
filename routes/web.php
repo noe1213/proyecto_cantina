@@ -12,29 +12,26 @@ Route::put('/api/productos/{id}', [ProductoController::class, 'update']); // Act
 Route::delete('/api/productos/{id}', [ProductoController::class, 'destroy']); // Eliminar un producto
 
 // Rutas de la API para clientes
-Route::get('/api/clientes', [ClienteController::class, 'index']); // Obtener todos los clie
-
-
-Route::post('/api/clientes', [ClienteController::class, 'store']);
-
+Route::get('/api/clientes', [ClienteController::class, 'index']); // Obtener todos los clientes
+Route::post('/api/clientes', [ClienteController::class, 'store']); // Crear un cliente
 Route::put('/api/clientes/{id}', [ClienteController::class, 'update']); // Actualizar un cliente
 Route::delete('/api/clientes/{ci}', [ClienteController::class, 'destroy']); // Eliminar un cliente
 
+// Rutas de la API para pedidos
+Route::get('/api/pedidos', [PedidoController::class, 'index']); // Obtener todos los pedidos
+Route::get('/api/pedidos/{id}', [PedidoController::class, 'show']); // Obtener un pedido específico
+Route::put('/api/pedidos/{id}/mark-as-status', [PedidoController::class, 'markAsStatus']); // Actualizar estado del pedido
 
+// Rutas de registro
+// Mostrar el formulario de registro
+Route::get('/registro', function () {
+    return view('registro');
+})->name('registro');
 
+// Procesar los datos del formulario
+Route::post('/registro', [ClienteController::class, 'store'])->name('registro.store');
 
-
-
-// Ruta para obtener todos los pedidos
-Route::get('/api/pedidos', [PedidoController::class, 'index']);
-
-// Ruta para obtener un pedido específico por ID
-Route::get('/api/pedidos/{id}', [PedidoController::class, 'show']);
-
-// Ruta para marcar un pedido como en proceso
-Route::put('/api/pedidos/{id}/mark-as-status', [PedidoController::class, 'markAsStatus']);
-
-// Otras rutas de vista
+// Otras rutas de vistas
 Route::view('/index', 'index')->name('index');
 Route::view('/login', 'login')->name('login');
 Route::view('/confirmacion', 'confirmacion')->name('confirmacion');
@@ -50,6 +47,4 @@ Route::view('/productos', 'productos')->name('productos');
 Route::view('/pedidos', 'pedidos')->name('pedidos');
 Route::view('/reportes', 'reportes')->name('reportes');
 Route::view('/clientes', 'clientes')->name('clientes');
-Route::view('/registro', 'registro')->name('registro');
-
 Route::view('/cambi_contra', 'cambi_contra')->name('cambi_contra');

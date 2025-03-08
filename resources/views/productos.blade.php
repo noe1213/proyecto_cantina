@@ -16,7 +16,6 @@
 
                         <th>Nombre</th>
                         <th>Precio</th>
-                        <th>Contorno</th>
                         <th>Categoría</th>
                         <th>Stock</th>
                         <th>Stock minimo</th>
@@ -45,10 +44,6 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <div class="input-half">
-                        <label for="contorno_comida">Contorno de Comida</label>
-                        <input type="text" id="contorno_comida" name="contorno_comida">
-                    </div>
                     <div class="input-half">
                         <label for="categoria_producto">Categoría del Producto</label>
                         <select id="categoria_producto" name="categoria_producto" required>
@@ -90,47 +85,10 @@
         </div>
     </main>
 
-    
+
     <x-footeradmin></x-footeradmin>
     @vite(entrypoints: ['resources/css/productos.css','resources/js/productos.js'])
     <!-- <script src="{{ asset('productos.js') }}"></script> -->
-    <script>
 
-        function storeImage(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const imageBase64 = e.target.result; // Obtener la imagen en base64
-                console.log(imageBase64);
-                localStorage.setItem("imagen_producto", imageBase64); // Almacenar en localStorage
-                const imagePreview = document.getElementById("image_preview");
-                imagePreview.src = imageBase64; // Mostrar la imagen en la vista previa
-                imagePreview.style.display = "block"; // Hacer visible la vista previa
-            };
-
-            if (file) {
-                reader.readAsDataURL(file); // Leer el archivo como URL de datos
-            }
-        }
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const imagePreview = document.getElementById("image_preview");
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = "block";
-            };
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Llamar a la función para obtener los productos al cargar la página
-        window.onload = fetchProducts;
-    </script>
 
     </html>
