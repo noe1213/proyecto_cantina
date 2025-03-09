@@ -15,6 +15,7 @@ class ProductoController extends Controller
     }
 
     // Método para almacenar un nuevo producto (POST)
+   
     public function store(Request $request)
     {
         $request->validate([
@@ -23,56 +24,53 @@ class ProductoController extends Controller
             'categoria_producto' => 'required|string|max:255',
             'stock_producto' => 'required|integer',
             'stock_minimo' => 'required|integer',
-            'imagen' => 'nullable|string|max:255',
+            'imagen_producto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validar la imagen
         ]);
 
-        // Crear un nuevo producto
-        $producto = new Producto();
-        $producto->nombre_producto = $request->nombre_producto;
-        $producto->precio_producto = $request->precio_producto;
-        $producto->categoria_producto = $request->categoria_producto;
-        $producto->stock_producto = $request->stock_producto;
-        $producto->stock_minimo = $request->stock_minimo;
-        $producto->imagen = $request->imagen_producto;
+        // Subir la imagen y obtener la ruta
+        $rutaImagen = null;
+        if ($request->hasFile('imagen_producto')) {
+            $rutaImagen = $request->file('imagen_producto')->store('imagenes_productos', 'public'); // Guardar en storage
+        }
 
-        $producto->save(); // Guardar el producto
+        // Crear el producto
+        $producto = Producto::create([
+            'nombre_producto' => $request->nombre_producto,
+            'precio_producto' => $request->precio_producto,
+            'categoria_producto' => $request->categoria_producto,
+            'stock_producto' => $request->stock_producto,
+            'stock_minimo' => $request->stock_minimo,
+            'imagen' => $rutaImagen, // Guardar la ruta de la imagen
+        ]);
 
         return response()->json($producto, 201); // Retornar el producto creado
     }
 
+
     // Método para actualizar un producto (PUT)
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_producto)
     {
-        $request->validate([
-            'nombre_producto' => 'required|string|max:255',
-            'precio_producto' => 'required|numeric',
-            'categoria_producto' => 'required|string|max:255',
-            'stock_producto' => 'required|integer',
-            'stock_minimo' => 'required|integer',
-            'imagen_producto' => 'nullable|string|max:255',
-        ]);
-
-        $producto = Producto::findOrFail($id); // Buscar el producto por ID
-
-        // Actualizar los campos
-        $producto->nombre_producto = $request->nombre_producto;
-        $producto->precio_producto = $request->precio_producto;
-        $producto->categoria_producto = $request->categoria_producto;
-        $producto->stock_producto = $request->stock_producto;
-        $producto->stock_minimo = $request->stock_minimo;
-        $producto->imagen = $request->imagen_producto;
-
-        $producto->save(); // Guardar los cambios
-
-        return response()->json($producto); // Retornar el producto actualizado
+        
     }
-
     // Método para eliminar un producto (DELETE)
-    public function destroy($id)
-    {
-        $producto = Producto::findOrFail($id); // Buscar el producto por ID
-        $producto->delete(); // Eliminar el producto
+    public function destroy($id_producto)
+{
+    $producto = Producto::where('id_producto', $id_producto)->firstOrFail();
+    $producto->delete();
+    return response()->json(['message' => 'Producto eliminado correctamente.'], 204);
+}
+public function show($id_producto)
+{
+    $producto = Producto::find($id_producto); // Buscar producto por ID
 
-        return response()->json(null, 204); // Retornar respuesta vacía
+    if (!$producto) {
+        return response()->json(['error' => 'Producto no encontrado'], 404); // Error 404
     }
+
+    return response()->json($producto); // Retornar producto
+}
+
+
+   
+    
 }

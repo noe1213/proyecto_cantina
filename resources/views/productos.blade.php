@@ -11,21 +11,23 @@
         <div class="table-container">
             <h2 class="section-title">Productos Creado</h2>
             <table class="table table-striped">
-                <thead>
-                    <tr>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Stock Mínimo</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="product-list">
+        <!-- Los productos se llenarán dinámicamente -->
+    </tbody>
+</table>
 
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Categoría</th>
-                        <th>Stock</th>
-                        <th>Stock minimo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="product-list">
-                    <!-- Aquí se agregarán los productos dinámicamente -->
-                </tbody>
-            </table>
+
         </div>
 
         <!-- Formulario para agregar un nuevo producto -->

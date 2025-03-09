@@ -1,29 +1,45 @@
 import Swal from "sweetalert2";
-// Función para obtener los productos al cargar la página
+
+// Obtener productos y llenar la tabla
 function fetchProducts() {
     fetch("/api/productos")
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach((product) => {
-                addProductToTable(product);
-            });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error al obtener los productos");
+            }
+            return response.json();
         })
-        .catch((error) => {
-            console.error("Error al obtener productos:", error);
-        });
+        .then((data) => populateTable(data)) // Llenar la tabla con los productos
+        .catch((error) => console.error("Error al obtener productos:", error));
 }
 
-// Función para agregar un producto a la tabla
+// Llenar la tabla con los productos
+function populateTable(products) {
+    const productList = document.getElementById("product-list");
+    productList.innerHTML = ""; // Limpiar contenido anterior
+
+    products.forEach((product) => addProductToTable(product));
+}
+
+// Agregar un producto a la tabla
 function addProductToTable(product) {
     const productList = document.getElementById("product-list");
     const row = document.createElement("tr");
+    row.setAttribute("data-id", product.id_producto);
+
     row.innerHTML = `
-        
         <td>${product.nombre_producto}</td>
         <td>${product.precio_producto}</td>
         <td>${product.categoria_producto}</td>
         <td>${product.stock_producto}</td>
         <td>${product.stock_minimo}</td>
+        <td>
+            ${
+                product.imagen
+                    ? `<img src="/storage/${product.imagen}" alt="Imagen del Producto" width="50">`
+                    : "Sin Imagen"
+            }
+        </td>
         <td>
             <button class="edit-button" onclick="editProduct(${product.id_producto})">Editar</button>
             <button class="delete-button" onclick="deleteProduct(${product.id_producto})">Eliminar</button>
@@ -32,107 +48,139 @@ function addProductToTable(product) {
     productList.appendChild(row);
 }
 
-// Función para editar un producto
-function editProduct(id) {
-    // Lógica para editar el producto
-    console.log("Editar producto con ID:", id);
-    // Aquí puedes implementar la lógica para cargar los datos del producto en el formulario
+// Cargar datos del producto en el formulario para editar
+function editProduct(id_producto) {
+    fetch(`/api/productos/${id_producto}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Error al cargar el producto: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then((producto) => {
+            document.getElementById("nombre_producto").value = producto.nombre_producto;
+            document.getElementById("precio_producto").value = producto.precio_producto;
+            document.getElementById("categoria_producto").value = producto.categoria_producto;
+            document.getElementById("stock_producto").value = producto.stock_producto;
+            document.getElementById("stock_minimo").value = producto.stock_minimo;
+
+            const imagePreview = document.getElementById("image_preview");
+            if (producto.imagen) {
+                imagePreview.src = `/storage/${producto.imagen}`;
+                imagePreview.style.display = "block";
+            } else {
+                imagePreview.style.display = "none";
+            }
+
+            document.getElementById("product-form").setAttribute("data-id", id_producto);
+        })
+        .catch((error) => {
+            console.error("Error al cargar el producto:", error);
+            Swal.fire({
+                title: "Error al cargar el producto",
+                text: error.message,
+                icon: "error",
+            });
+        });
 }
 
-// Función para eliminar un producto
-function deleteProduct(id) {
-    fetch(`/api/productos/${id}`, {
-        method: "DELETE",
+// Guardar producto (nuevo o editado)
+document.getElementById("product-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const productId = this.getAttribute("data-id");
+    const method = productId ? "PUT" : "POST";
+    const url = productId ? `/api/productos/${productId}` : "/api/productos";
+
+    fetch(url, {
+        method: method,
+        body: formData,
         headers: {
-            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
-                .value, // Incluir el token CSRF
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
         },
     })
         .then((response) => {
             if (!response.ok) {
-                throw new Error("Error al eliminar el producto");
+                throw new Error("Error al guardar el producto");
             }
-            // Eliminar la fila de la tabla
-            const row = document.querySelector(`tr[data-id="${id}"]`);
-            if (row) {
-                row.remove();
+            return response.json();
+        })
+        .then((data) => {
+            Swal.fire({
+                title: productId ? "Producto actualizado!" : "Producto guardado!",
+                icon: "success",
+            });
+
+            if (productId) {
+                updateTableRow(data);
+            } else {
+                addProductToTable(data);
             }
+
+            clearForm();
         })
         .catch((error) => {
-            console.error("Error:", error);
-        });
-}
-
-function storeImage(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-        const imageBase64 = e.target.result; // Obtener la imagen en base64
-        console.log(imageBase64);
-        localStorage.setItem("imagen_producto", imageBase64); // Almacenar en localStorage
-        const imagePreview = document.getElementById("image_preview");
-        imagePreview.src = imageBase64; // Mostrar la imagen en la vista previa
-        imagePreview.style.display = "block"; // Hacer visible la vista previa
-    };
-
-    if (file) {
-        reader.readAsDataURL(file); // Leer el archivo como URL de datos
-    }
-}
-
-document
-    .getElementById("product-form")
-    .addEventListener("submit", function (event) {
-        event.preventDefault(); // Evitar el envío normal del formulario
-
-        const formData = new FormData(this); // Crear un objeto FormData con los datos del formulario
-        const imageBase64 = localStorage.getItem("imagen_producto");
-        console.log(imageBase64); // Obtener la imagen del localStorage
-        formData.append("imagen_producto", imageBase64); // Agregar la imagen al FormData
-        // Crear un objeto FormData con los datos del formulario
-
-        fetch("/api/productos", {
-            method: "POST",
-            body: formData,
-            headers: {
-                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
-                    .value, // Incluir el token CSRF
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error en la solicitud");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                Swal.fire({ title: "Producto guardado!", icon: "success" });
-                console.log("Producto guardado:", data);
-                // Aquí puedes agregar lógica para mostrar un mensaje de éxito o limpiar el formulario
-                document.getElementById("product-form").reset(); // Limpiar el formulario
-                document.getElementById("image_preview").style.display = "none"; // Ocultar la vista previa
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                // Aquí puedes agregar lógica para mostrar un mensaje de error
+            console.error("Error al guardar el producto:", error);
+            Swal.fire({
+                title: "Error al guardar el producto",
+                text: error.message,
+                icon: "error",
             });
-    });
+        });
+});
 
-function previewImage(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
 
-    reader.onload = function (e) {
-        const imagePreview = document.getElementById("image_preview");
-        imagePreview.src = e.target.result;
-        imagePreview.style.display = "block";
-    };
-
-    if (file) {
-        reader.readAsDataURL(file);
-    }
+// Limpiar el formulario después de agregar o editar un producto
+function clearForm() {
+    const form = document.getElementById("product-form");
+    form.reset();
+    form.removeAttribute("data-id");
+    document.getElementById("image_preview").style.display = "none";
 }
 
-// Llamar a la función para obtener los productos al cargar la página
+// Eliminar un producto
+function deleteProduct(id_producto) {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡Esta acción no se puede deshacer!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/api/productos/${id_producto}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error al eliminar el producto");
+                    }
+                    const row = document.querySelector(`tr[data-id="${id_producto}"]`);
+                    if (row) {
+                        row.remove(); // Eliminar la fila de la tabla
+                    }
+                    Swal.fire({ title: "Producto eliminado!", icon: "success" });
+                })
+                .catch((error) => {
+                    console.error("Error al eliminar el producto:", error);
+                    Swal.fire({
+                        title: "Error al eliminar el producto",
+                        text: error.message,
+                        icon: "error",
+                    });
+                });
+        }
+    });
+}
+
+// Inicializar y cargar productos al inicio
 window.onload = fetchProducts;
+
+// Exponer las funciones de edición y eliminación globalmente
+window.editProduct = editProduct;
+window.deleteProduct = deleteProduct;
