@@ -117,3 +117,88 @@
 .mark-as-button_:hover {
     background-color: #0a692e; /* Color de fondo al pasar el mouse */
 }
+.notification-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bell-icon {
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: none; /* Oculto por defecto */
+    font-weight: bold;
+    text-align: center;
+}
+
+.notification-list {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0; /* Espaciado dentro del contenedor */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    position: absolute; /* Relativo al contenedor de la campana */
+    top: 50px; /* Justo debajo de la campana */
+    right: 0; /* Alineado con el borde derecho */
+    max-height: 300px; /* Limita la altura máxima */
+    overflow-y: auto; /* Habilita el scroll si hay demasiadas notificaciones */
+    z-index: 9999; /* Se asegura de estar encima de otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Suaviza la sombra */
+}
+
+.notificacion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    margin: 0;
+    background-color: #fffbe6;
+    border-bottom: 1px solid #ffecb3;
+    font-size: 14px;
+    color: #856404;
+    border-radius: 4px;
+    word-wrap: break-word; /* Asegura que el texto largo se ajuste */
+    transition: background-color 0.3s ease;
+}
+
+.notificacion-item:hover {
+    background-color: #fffae0; /* Un tono más claro al pasar el cursor */
+}
+
+.notification-list li:last-child {
+    border-bottom: none; /* Elimina el borde del último elemento */
+}
+
+.notificacion-item span {
+    flex-grow: 1;
+    text-align: left;
+    font-size: 14px;
+}
+
+.notificacion-item button {
+    background-color: transparent;
+    border: none;
+    color: #856404;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+.notificacion-item button:hover {
+    color: #543c04; /* Color más oscuro al pasar el cursor */
+}

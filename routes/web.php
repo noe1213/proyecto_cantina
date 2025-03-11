@@ -8,9 +8,21 @@ use App\Http\Controllers\PedidoController;
 // Rutas de la API para productos
 Route::get('/api/productos', [ProductoController::class, 'index']); // Obtener todos los productos
 Route::post('/api/productos', [ProductoController::class, 'store']); // Crear un producto nuevo
+Route::get('/api/productos/stock-bajo', [ProductoController::class, 'obtenerStockBajo']);
 Route::get('/api/productos/{id_producto}', [ProductoController::class, 'show']); // Obtener un producto específico
 Route::put('/api/productos/{id_producto}', [ProductoController::class, 'update']); // Actualizar un producto
 Route::delete('/api/productos/{id_producto}', [ProductoController::class, 'destroy']); 
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Rutas de la API para clientes
@@ -19,7 +31,7 @@ Route::get('/api/clientes', [ClienteController::class, 'index']); // Obtener tod
 
 Route::post('/api/clientes', [ClienteController::class, 'store']);
 
-Route::put('/api/clientes/{id}', [ClienteController::class, 'update']); // Actualizar un cliente
+Route::put('/api/clientes/{ci}', [ClienteController::class, 'update']); // Actualizar un cliente
 Route::delete('/api/clientes/{ci}', [ClienteController::class, 'destroy']); // Eliminar un cliente
 
 

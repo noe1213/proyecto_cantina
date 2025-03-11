@@ -1,35 +1,91 @@
 /* Notification Icon Styles */
-.notification-icon {
-    position: relative; /* Para posicionar las notificaciones correctamente */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
-    margin-left: 899px; /* Ajusta la posición horizontal del contador de alertas */
+.notification-container {
+    position: relative; /* Relativo al contenedor para el menú */
+    display: inline-block;
+    cursor: pointer;
 }
 
-.notification-badge {
+.bell-icon {
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.badge {
     position: absolute;
-    top: -5px; /* Ajusta la posición vertical del contador de alertas */
-    right: -10px; /* Ajusta la posición horizontal del contador de alertas */
+    top: -5px; /* Ajusta la posición vertical para que no tape la campana */
+    right: -5px; /* Alineado al borde derecho */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: none; /* Oculto por defecto */
+    font-weight: bold;
+    text-align: center;
+    z-index: 1001; /* Asegura que el badge esté encima */
 }
 
-#alertas {
-    display: none; /* Cambiar a 'block' para mostrar las alertas */
-    background-color: rgba(248, 215, 218, 0.9); /* Fondo semi-transparente */
-    color: #721c24;
-    border-radius: 0.4rem;
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    position: absolute; /* Para que aparezca sobre otros elementos */
-    right: 100px; /* Alineado a la derecha del contenedor de notificación */
-    top: calc(
-        9% + 10px
-    ); /* Coloca la alerta justo debajo del ícono con un margen de separación */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+.notification-list {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0; /* Espaciado interno */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    position: absolute; /* Relativo al contenedor de la campana */
+    top: 50px; /* Justo debajo del ícono de la campana */
+    right: 0; /* Alineado con el borde derecho */
+    width: 300px; /* Ancho fijo para consistencia */
+    max-height: 400px; /* Limita la altura máxima */
+    overflow-y: auto; /* Habilita scroll si hay muchas notificaciones */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un diseño elevado */
 }
 
-/* Alert Styles */
-#alertas p {
-    margin-bottom: 0.5rem; /* Espacio entre las alertas */
+.notificacion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin: 0;
+    background-color: #fffbe6;
+    border-bottom: 1px solid #ffecb3; /* Línea divisoria entre notificaciones */
+    font-size: 14px;
+    color: #856404;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
+
+.notificacion-item:hover {
+    background-color: #fffae0; /* Un tono más claro al pasar el cursor */
+}
+
+.notification-list li:last-child {
+    border-bottom: none; /* Quita el borde del último elemento */
+}
+
+.notificacion-item span {
+    flex-grow: 1; /* El texto ocupa el espacio disponible */
+    text-align: left;
+    font-size: 14px;
+}
+
+.notificacion-item button {
+    background-color: transparent;
+    border: none;
+    color: #856404;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+.notificacion-item button:hover {
+    color: #543c04; /* Color más oscuro al pasar el cursor */
+}
+
 /* Main Content */
 main {
     flex: 1 0 auto;
@@ -119,37 +175,7 @@ h1 {
 }
 
 /* Notification Icon Styles */
-.notification-icon {
-    position: relative; /* Para posicionar las notificaciones correctamente */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
-    margin-left: 899px; /* Ajusta la posición horizontal del contador de alertas */
-}
 
-.notification-badge {
-    position: absolute;
-    top: -5px; /* Ajusta la posición vertical del contador de alertas */
-    right: -10px; /* Ajusta la posición horizontal del contador de alertas */
-}
-
-#alertas {
-    display: none; /* Cambiar a 'block' para mostrar las alertas */
-    background-color: rgba(248, 215, 218, 0.9); /* Fondo semi-transparente */
-    color: #721c24;
-    border-radius: 0.4rem;
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    position: absolute; /* Para que aparezca sobre otros elementos */
-    right: 100px; /* Alineado a la derecha del contenedor de notificación */
-    top: calc(
-        9% + 10px
-    ); /* Coloca la alerta justo debajo del ícono con un margen de separación */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-}
-
-/* Alert Styles */
-#alertas p {
-    margin-bottom: 0.5rem; /* Espacio entre las alertas */
-}
 /* Main Content */
 main {
     flex: 1 0 auto;
