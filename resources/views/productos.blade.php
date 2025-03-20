@@ -1,7 +1,8 @@
 <x-head-admin></x-head-admin>
+
 <body>
     <x-header-cjoae>
-        
+
     </x-header-cjoae>
     <main>
         <x-menu-admin></x-menu-admin>
@@ -61,9 +62,12 @@
                 </div>
                 <div class="input-group">
                     <label for="imagen_producto">Imagen</label>
-                    <button type="button" class="upload-button" onclick="document.getElementById('imagen_producto').click();">Subir Imagen</button>
-                    <input type="file" id="imagen_producto" name="imagen_producto" accept="image/*" onchange="previewImage(event)" style="display:none;">
-                    <img id="image_preview" src="" alt="Vista previa" style="display:none; margin-top:10px; max-width:100%; border-radius:4px;">
+                    <button type="button" class="upload-button"
+                        onclick="document.getElementById('imagen_producto').click();">Subir Imagen</button>
+                    <input type="file" id="imagen_producto" name="imagen_producto" accept="image/*"
+                        onchange="previewImage(event)" style="display:none;">
+                    <img id="image_preview" src="" alt="Vista previa"
+                        style="display:none; margin-top:10px; max-width:100%; border-radius:4px;">
                 </div>
                 <div class="botones">
                     <button type="submit" class="guardar-btn">Guardar Producto</button>
@@ -71,6 +75,7 @@
                 </div>
             </form>
         </div>
+
 
         <!-- Modal para editar producto -->
         <div id="edit-modal" class="modal">
@@ -108,9 +113,13 @@
                     </div>
                     <div class="input-group">
                         <label for="edit_imagen_producto">Imagen</label>
-                        <button type="button" class="upload-button" onclick="document.getElementById('edit_imagen_producto').click();">Subir Imagen</button>
-                        <input type="file" id="edit_imagen_producto" name="imagen_producto" accept="image/*" onchange="previewEditImage(event)" style="display:none;">
-                        <img id="edit_image_preview" src="" alt="Vista previa" style="margin-top:10px; max-width:100%; border-radius:4px; display:none;">
+                        <button type="button" class="upload-button"
+                            onclick="document.getElementById('edit_imagen_producto').click();">Subir Imagen</button>
+                        <input type="file" id="edit_imagen_producto" name="imagen_producto" accept="image/*"
+                            onchange="previewEditImage(event)" style="display:none;">
+
+                        <img id="edit_image_preview" src="" alt="Vista previa"
+                            style="margin-top:10px; max-width:100%; border-radius:4px; display:none;">
                     </div>
                     <button type="submit" class="guardar-btn">Guardar Cambios</button>
                 </form>

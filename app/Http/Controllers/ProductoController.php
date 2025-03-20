@@ -13,16 +13,16 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         $query = Producto::query();
-    
+
         if ($request->has('categoria')) {
             $query->where('categoria_producto', $request->categoria);
         }
-    
+
         $productos = $query->get();
-    
+
         return response()->json($productos, 200);
     }
-    
+
     // Almacenar un nuevo producto (POST)
     public function store(Request $request)
     {
@@ -77,24 +77,24 @@ class ProductoController extends Controller
         }
     }
     public function obtenerStockBajo()
-{
-    $productosBajosStock = Producto::whereColumn('stock_producto', '<', 'stock_minimo')
-        ->select('id_producto', 'nombre_producto', 'stock_producto', 'stock_minimo')
-        ->get();
+    {
+        $productosBajosStock = Producto::whereColumn('stock_producto', '<', 'stock_minimo')
+            ->select('id_producto', 'nombre_producto', 'stock_producto', 'stock_minimo')
+            ->get();
 
-    // Filtrar productos que no tengan nombre
-    $productosValidos = $productosBajosStock->filter(function ($producto) {
-        return !empty($producto->nombre_producto); // Solo incluye productos con nombre
-    });
+        // Filtrar productos que no tengan nombre
+        $productosValidos = $productosBajosStock->filter(function ($producto) {
+            return !empty($producto->nombre_producto); // Solo incluye productos con nombre
+        });
 
-    return response()->json($productosValidos, 200);
-}
+        return response()->json($productosValidos, 200);
+    }
 
 
-    
 
-    
-    
+
+
+
     // Obtener un producto específico (GET)
     public function show($id_producto)
     {
@@ -137,7 +137,7 @@ class ProductoController extends Controller
                 'precio_producto' => 'required|numeric',
                 'categoria_producto' => 'required|string|max:255',
                 'stock_producto' => 'required|integer',
-            
+
                 'imagen_producto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             ], $messages);
 
@@ -192,25 +192,20 @@ class ProductoController extends Controller
     }
     public function obtenerProductosPorCategoria()
     {
-        $productos = Producto::select('id_producto', 'nombre_producto', 'precio_producto', 'categoria_producto', 'imagen')->get();
+        $productos = Producto::select('id_producto', 'nombre_producto', 'precio_producto', 'categoria_producto', 'imagen', 'stock_producto', 'stock_minimo')->get();
         \Log::info('JSON final: ', ['productos' => $productos]);
 
 
-        foreach ($productos as $producto) {
-            if ($producto->imagen) {
-                // Convierte la ruta relativa en una URL completa
-                $producto->imagen = asset('storage/' . $producto->imagen);
-            } else {
-                // Imagen predeterminada
-                $producto->imagen = asset('storage/imagenes/default.png');
-            }
-        }
-    
+        // foreach ($productos as $producto) {
+        //     if ($producto->imagen) {
+        //         // Convierte la ruta relativa en una URL completa
+        //         $producto->imagen = asset('storage/' . $producto->imagen);
+        //     } else {
+        //         // Imagen predeterminada
+        //         $producto->imagen = asset('storage/imagenes/default.png');
+        //     }
+        // }
+
         return response()->json($productos, 200);
     }
-    
-    
-    
-
 }
-
