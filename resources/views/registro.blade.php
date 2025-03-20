@@ -61,7 +61,7 @@
                 </div>
                 <div class="input-half">
                     <label for="anio_n">Año de Nacimiento</label>
-                    <input type="number" id="anio_n" name="anio_n" min="1900" max="2100" required
+                    <input type="number" id="anio_n" name="anio_n" min="1950" max="2100" required
                         placeholder="Ej: 1990">
                 </div>
             </div>

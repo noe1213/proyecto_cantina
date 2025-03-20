@@ -97,19 +97,48 @@ a {
 }
 
 .product {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     padding: 10px;
+    margin: 10px;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .product img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ccc;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
+
+.product h4, .product p, .product label, .product input {
+    margin: 5px 0;
+}
+
+
+/* Estilo para las imágenes del producto */
+.product img {
+    width: 150px !important; /* Ancho fijo */
+    height: 150px !important; /* Alto fijo */
+    object-fit: cover !important; /* Asegúrate de que las imágenes rellenen el espacio */
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.product img:hover {
+    transform: scale(1.1); /* Efecto de zoom */
+    border: 2px solid #0055cc; /* Resaltar borde en hover */
+}
+
 
 .product h4 {
     margin: 10px 0;
@@ -163,6 +192,13 @@ a {
     z-index: 1000;
     transition: right 0.3s ease;
     border-radius: 8px; /* Rounded corners */
+}
+.product, .product * {
+    color: #333; /* Cambia el color del texto a un gris oscuro (legible) */
+}
+
+.cart-window, .cart-window * {
+    color: #333; /* Asegura que el texto del carrito también sea visible */
 }
 
 .cart-window h2 {
@@ -334,4 +370,18 @@ footer {
     cursor: pointer;
     margin-top: 10px; 
 }  
+.cart-window {
+    position: fixed; /* Asegura que se mantenga en su lugar al hacer scroll */
+    top: 20%; /* Ajusta la altura para que esté visible */
+    right: 20px; /* Mueve el carrito hacia el borde derecho */
+    width: 300px; /* Define el ancho */
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo ligeramente transparente */
+    border: 1px solid #ccc; /* Borde del carrito */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    padding: 20px; /* Espaciado interno */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    border-radius: 8px; /* Bordes redondeados */
+    display: none; /* Oculta el carrito al inicio */
+    transition: all 0.3s ease; /* Transición suave para mostrarlo */
+}
 

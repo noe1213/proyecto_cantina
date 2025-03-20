@@ -1,8 +1,18 @@
+import Swal from "sweetalert2";
+
+// Inicializar la tabla de productos y verificar notificaciones al cargar la página
+window.onload = () => {
+    fetchProducts();
+     
+};
 document.addEventListener("DOMContentLoaded", () => {
     // Cargar el historial de notificaciones desde localStorage
     cargarHistorialNotificaciones();
 
-    obtenerStockBajo(); // Llama al backend para obtener los productos con stock bajo
+    // Comenzar el polling: llama al backend cada 25 segundos
+    setInterval(() => {
+        obtenerStockBajo(); // Llama al backend periódicamente
+    }, 25000); // Intervalo de 25 segundos
 
     // Maneja el clic en la campanita para mostrar/ocultar notificaciones
     const notificationButton = document.getElementById("notification-button");
@@ -16,11 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-let notificacionesHistorial = []; // Historial completo de notificaciones
-let notificacionesSinLeer = []; // Array para almacenar notificaciones nuevas no leídas
+let notificacionesHistorial = {}; // Historial completo de notificaciones (basado en IDs y estados)
+let notificacionesSinLeer = []; // Array para manejar las notificaciones no leídas
 
 function obtenerStockBajo() {
-    fetch("http://127.0.0.1:8000/api/productos/stock-bajo")
+    fetch("http://127.0.0.1:8000/api/productos/stock-bajo") // Cambia la URL según tu API
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Error en el servidor: " + response.statusText);
@@ -28,38 +38,118 @@ function obtenerStockBajo() {
             return response.json();
         })
         .then((productos) => {
-            agregarHistorialNotificaciones(productos);
-            if (productos.length > 0) {
-                reproducirSonidoAlerta(); // Reproduce el sonido de alerta si hay productos con stock bajo
-            }
+            procesarProductosConStockBajo(productos); // Procesa los productos recibidos
         })
         .catch((error) => console.error("Error al obtener productos con stock bajo:", error));
 }
 
-function agregarHistorialNotificaciones(productos) {
+function procesarProductosConStockBajo(productos) {
     const notificationBadge = document.getElementById("notification-badge");
     const notificationList = document.getElementById("notification-list");
 
+    if (productos.length === 0) {
+        // Notificación si no hay productos con stock bajo
+        if (!notificacionesHistorial["sin_stock_bajo"]) {
+            notificacionesHistorial["sin_stock_bajo"] = true;
+
+            const mensaje = "No hay productos con stock bajo";
+            const listItem = document.createElement("li");
+            listItem.textContent = mensaje;
+            listItem.className = "notificacion-item normalizado";
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "✖";
+            removeButton.className = "remove-notification-button";
+            removeButton.addEventListener("click", () => {
+                listItem.remove();
+                delete notificacionesHistorial["sin_stock_bajo"];
+                guardarHistorialEnLocalStorage();
+            });
+
+            listItem.appendChild(removeButton);
+            notificationList.appendChild(listItem);
+        }
+        guardarHistorialEnLocalStorage();
+        actualizarContadorNotificaciones(); // Asegura que el contador refleje las notificaciones
+        return; // Detén el procesamiento si no hay productos con stock bajo
+    }
+
     productos.forEach((producto) => {
+        // Verifica si el producto y el nombre del producto tienen datos válidos
+        if (!producto || !producto.nombre_producto) {
+            console.error("Producto inválido detectado:", producto);
+            return; // Salta este producto si no tiene datos válidos
+        }
+
+        // Estado crítico: stock igual a 1
+        const stockCritico = producto.stock_producto === 1;
+        const mensajeCritico = `${producto.nombre_producto} está en estado CRÍTICO de stock (solo queda 1 unidad)`;
+
+        // Notificación estándar: stock bajo pero no crítico
         const mensaje = `${producto.nombre_producto} está bajo el límite de stock`;
 
-        // Si no está ya en el historial, lo añadimos
-        if (!notificacionesHistorial.some((notificacion) => notificacion === mensaje)) {
-            notificacionesHistorial.push(mensaje); // Añade al historial completo
-            notificacionesSinLeer.push(mensaje); // Añade solo las nuevas no leídas
+        // Generar notificación para stock crítico
+        if (stockCritico && !notificacionesHistorial[`${producto.id_producto}_critico`]) {
+            notificacionesHistorial[producto.id_producto] = producto.nombre_producto;
 
-            // Crear el elemento visual de la notificación y agregarlo al área blanca
+            Swal.fire({
+                title: "⚠️ ¡Stock Crítico!",
+                text: mensajeCritico,
+                icon: "warning", // Usa el ícono de advertencia
+                confirmButtonText: "Entendido",
+            });
+
+            notificacionesSinLeer.push(mensajeCritico); // Contabiliza como nueva notificación crítica
+
+            // Añadir al historial visual
+            const listItem = document.createElement("li");
+            listItem.textContent = mensajeCritico;
+            listItem.className = "notificacion-item critico";
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "✖";
+            removeButton.className = "remove-notification-button";
+            removeButton.addEventListener("click", () => {
+                listItem.remove();
+                delete notificacionesHistorial[`${producto.id_producto}_critico`];
+                guardarHistorialEnLocalStorage();
+            });
+
+            listItem.appendChild(removeButton);
+            notificationList.appendChild(listItem);
+        }
+
+        // Generar notificación estándar para stock bajo
+        if (!stockCritico && !notificacionesHistorial[producto.id_producto]) {
+            notificacionesHistorial[producto.id_producto] = producto.nombre_producto;
+
+            notificacionesSinLeer.push(mensaje); // Contabiliza como nueva notificación estándar
+
             const listItem = document.createElement("li");
             listItem.textContent = mensaje;
             listItem.className = "notificacion-item";
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "✖";
+            removeButton.className = "remove-notification-button";
+            removeButton.addEventListener("click", () => {
+                listItem.remove();
+                delete notificacionesHistorial[producto.id_producto];
+                guardarHistorialEnLocalStorage();
+            });
+
+            listItem.appendChild(removeButton);
             notificationList.appendChild(listItem);
         }
     });
 
     // Guarda el historial actualizado en localStorage
     guardarHistorialEnLocalStorage();
+    actualizarContadorNotificaciones(); // Asegura que el contador sea correcto
+}
 
-    // Actualiza el contador de la campanita con las nuevas notificaciones sin leer
+function actualizarContadorNotificaciones() {
+    const notificationBadge = document.getElementById("notification-badge");
     notificationBadge.textContent = notificacionesSinLeer.length;
     notificationBadge.style.display = notificacionesSinLeer.length > 0 ? "inline-block" : "none";
 }
@@ -69,23 +159,48 @@ function marcarNotificacionesComoLeidas() {
 
     // Vacía las notificaciones no leídas, pero conserva el historial
     notificacionesSinLeer = [];
-    notificationBadge.style.display = "none"; // Oculta el badge rojo
+    notificationBadge.style.display = "none"; // Oculta el contador
 }
 
 function cargarHistorialNotificaciones() {
     const notificationList = document.getElementById("notification-list");
 
-    // Carga el historial desde localStorage
-    const historialGuardado = JSON.parse(localStorage.getItem("notificacionesHistorial")) || [];
+    // Cargar el historial desde localStorage
+    const historialGuardado = JSON.parse(localStorage.getItem("notificacionesHistorial")) || {};
     notificacionesHistorial = historialGuardado;
 
-    // Renderiza las notificaciones guardadas en la lista
-    notificacionesHistorial.forEach((mensaje) => {
+    // Renderiza las notificaciones guardadas
+    for (const id in notificacionesHistorial) {
+        const nombreProducto = notificacionesHistorial[id];
+        let mensaje;
+
+        // Determina si es una notificación crítica o estándar
+        if (id.endsWith("_critico")) {
+            mensaje = `${nombreProducto} está en estado CRÍTICO de stock (solo queda 1 unidad)`;
+        } else if (id === "sin_stock_bajo") {
+            mensaje = "No hay productos con stock bajo";
+        } else {
+            mensaje = `${nombreProducto} está bajo el límite de stock`;
+        }
+
         const listItem = document.createElement("li");
         listItem.textContent = mensaje;
-        listItem.className = "notificacion-item";
+        listItem.className = id.endsWith("_critico")
+            ? "notificacion-item critico"
+            : "notificacion-item normalizado";
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "✖";
+        removeButton.className = "remove-notification-button";
+        removeButton.addEventListener("click", () => {
+            listItem.remove();
+            delete notificacionesHistorial[id];
+            guardarHistorialEnLocalStorage();
+        });
+
+        listItem.appendChild(removeButton);
         notificationList.appendChild(listItem);
-    });
+    }
 }
 
 function guardarHistorialEnLocalStorage() {
@@ -94,8 +209,6 @@ function guardarHistorialEnLocalStorage() {
 }
 
 function reproducirSonidoAlerta() {
-    const audio = new Audio("ruta-del-sonido/alerta.mp3"); // Reemplaza con la ruta de tu archivo de sonido
+    const audio = new Audio("ruta-del-sonido/alerta.mp3"); // Cambia "ruta-del-sonido/alerta.mp3" por la ruta real
     audio.play();
 }
-
-    

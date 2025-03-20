@@ -10,17 +10,25 @@ use App\Events\StockBajoEvent;
 class ProductoController extends Controller
 {
     // Obtener todos los productos (GET)
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::all();
+        $query = Producto::query();
+    
+        if ($request->has('categoria')) {
+            $query->where('categoria_producto', $request->categoria);
+        }
+    
+        $productos = $query->get();
+    
         return response()->json($productos, 200);
     }
-
+    
     // Almacenar un nuevo producto (POST)
     public function store(Request $request)
     {
         // Mensajes de error personalizados
         $messages = [
+            'nombre_producto' => 'El producto debe ser unico',
             'nombre_producto.required' => 'El nombre del producto es obligatorio.',
             'precio_producto.required' => 'El precio del producto es obligatorio.',
             'precio_producto.numeric' => 'El precio debe ser un número válido.',
@@ -37,7 +45,7 @@ class ProductoController extends Controller
 
         try {
             $request->validate([
-                'nombre_producto' => 'required|string|max:255',
+                'nombre_producto' => 'required|unique:productos|string|max:255',
                 'precio_producto' => 'required|numeric',
                 'categoria_producto' => 'required|string|max:255',
                 'stock_producto' => 'required|integer',
@@ -70,19 +78,19 @@ class ProductoController extends Controller
     }
     public function obtenerStockBajo()
 {
-    // Obtener productos con stock bajo
     $productosBajosStock = Producto::whereColumn('stock_producto', '<', 'stock_minimo')
         ->select('id_producto', 'nombre_producto', 'stock_producto', 'stock_minimo')
         ->get();
 
-    // Si no hay productos con stock bajo
-    if ($productosBajosStock->isEmpty()) {
-        return response()->json(['message' => 'No hay productos con stock bajo.'], 200);
-    }
+    // Filtrar productos que no tengan nombre
+    $productosValidos = $productosBajosStock->filter(function ($producto) {
+        return !empty($producto->nombre_producto); // Solo incluye productos con nombre
+    });
 
-    // Retorna los datos
-    return response()->json($productosBajosStock, 200);
+    return response()->json($productosValidos, 200);
 }
+
+
     
 
     
@@ -182,4 +190,27 @@ class ProductoController extends Controller
             return response()->json(['error' => 'Hubo un error inesperado: ' . $e->getMessage()], 500);
         }
     }
+    public function obtenerProductosPorCategoria()
+    {
+        $productos = Producto::select('id_producto', 'nombre_producto', 'precio_producto', 'categoria_producto', 'imagen')->get();
+        \Log::info('JSON final: ', ['productos' => $productos]);
+
+
+        foreach ($productos as $producto) {
+            if ($producto->imagen) {
+                // Convierte la ruta relativa en una URL completa
+                $producto->imagen = asset('storage/' . $producto->imagen);
+            } else {
+                // Imagen predeterminada
+                $producto->imagen = asset('storage/imagenes/default.png');
+            }
+        }
+    
+        return response()->json($productos, 200);
+    }
+    
+    
+    
+
 }
+

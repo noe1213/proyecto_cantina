@@ -26,11 +26,20 @@
 
                 </a> 
                 </ul>
-        <div class="cart-container " onclick="toggleCart()" style="margin-left: 20px;font-size: 44%; display: flex; align-items: center; cursor: pointer;">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count" id="cartCount" style="margin-left: 2px;">0</span>
-        </div>
-       
-    </nav>
+    <!-- Ícono del Carrito en el header -->
+    <div id="cartIcon" class="cart-container">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount" class="cart-count">0</span>
+</div>
+ </nav>
 </header>
+<div id="cartWindow" class="cart-window" style="display: none;">
+    <h2>Carrito de Compras</h2>
+    <ul id="cartItems"></ul>
+    <p id="totalPrice">Total: $0.00</p>
+    <div class="cart-actions">
+        <button id="emptyCartButton">Vaciar Carrito</button>
+        <button id="confirmOrderButton">Confirmar Pedido</button>
+    </div>
+</div>
 

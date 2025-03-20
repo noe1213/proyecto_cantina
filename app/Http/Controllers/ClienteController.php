@@ -25,7 +25,7 @@ class ClienteController extends Controller
     {
         // Reglas de validación
         $rules = [
-            'ci' => 'required|digits:8|unique:clientes,ci',
+            'ci' => 'required|unique:clientes,ci',
             'correo' => 'required|email|unique:clientes,correo',
             'nombre' => 'required',
             'apellido' => 'required',
@@ -45,7 +45,6 @@ class ClienteController extends Controller
         $messages = [
             'ci.required' => 'La cédula es obligatoria.',
             'ci.unique' => 'La cédula ya está registrada.',
-            'ci.digits' => 'La cédula debe tener 8 dígitos.',
             'correo.required' => 'El correo es obligatorio.',
             'correo.unique' => 'El correo electrónico ya está registrado.',
             'correo.email' => 'Debe ingresar un correo válido.',
@@ -123,6 +122,56 @@ class ClienteController extends Controller
             return response()->json(['message' => 'Error al registrar el cliente: ' . $e->getMessage()], 500);
         }
     }
+    public function show($ci)
+{
+    try {
+        // Buscar cliente por cédula
+        $cliente = Cliente::where('ci', $ci)->first();
+
+        if (!$cliente) {
+            return response()->json(['error' => 'Cliente no encontrado'], 404);
+        }
+
+        return response()->json($cliente, 200);
+    } catch (\Exception $e) {
+        \Log::error('Error al obtener cliente: ' . $e->getMessage());
+        return response()->json(['error' => 'Error inesperado al obtener el cliente.'], 500);
+    }
+}
+public function update(Request $request, $ci)
+{
+    try {
+        // Buscar el cliente por CI
+        $cliente = Cliente::where('ci', $ci)->first();
+
+        if (!$cliente) {
+            return response()->json(['error' => 'Cliente no encontrado'], 404);
+        }
+
+        // Validar los datos enviados
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'correo' => 'required|email|unique:clientes,correo,' . $cliente->id,
+            'telefono' => 'required|digits:11|unique:clientes,telefono,' . $cliente->id,
+            'municipio' => 'nullable|string|max:255',
+            'parroquia' => 'nullable|string|max:255',
+            'calle' => 'nullable|string|max:255',
+        ]);
+
+        // Actualizar los datos del cliente
+        $cliente->update($validatedData);
+
+        return response()->json(['message' => 'Cliente actualizado correctamente'], 200);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json(['errors' => $e->errors()], 422);
+    } catch (\Exception $e) {
+        \Log::error('Error inesperado al actualizar cliente: ' . $e->getMessage());
+        return response()->json(['error' => 'Error inesperado en el servidor.'], 500);
+    }
+}
+
+    
     /**
      * Remove the specified resource from storage.
      */

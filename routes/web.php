@@ -5,65 +5,54 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
 
-// Rutas de la API para productos
-Route::get('/api/productos', [ProductoController::class, 'index']); // Obtener todos los productos
-Route::post('/api/productos', [ProductoController::class, 'store']); // Crear un producto nuevo
-Route::get('/api/productos/stock-bajo', [ProductoController::class, 'obtenerStockBajo']);
-Route::get('/api/productos/{id_producto}', [ProductoController::class, 'show']); // Obtener un producto específico
-Route::put('/api/productos/{id_producto}', [ProductoController::class, 'update']); // Actualizar un producto
-Route::delete('/api/productos/{id_producto}', [ProductoController::class, 'destroy']); 
+// === RUTAS DE LA API ===
+Route::prefix('api')->group(function () {
+    // Rutas para productos
+    Route::get('/productos', [ProductoController::class, 'index']); // Listar productos
+    Route::post('/productos', [ProductoController::class, 'store']); // Crear producto
+    Route::get('/productos/stock-bajo', [ProductoController::class, 'obtenerStockBajo']); // Productos con stock bajo
+    Route::get('/productos/{id_producto}', [ProductoController::class, 'show']); // Detallar un producto
+    Route::put('/productos/{id_producto}', [ProductoController::class, 'update']); // Actualizar producto
+    Route::delete('/productos/{id_producto}', [ProductoController::class, 'destroy']); // Eliminar producto
+    Route::get('/productos', [ProductoController::class, 'obtenerProductosPorCategoria']); // Categorizar productos
+
+    // Rutas para clientes gestionados por administrador
+    Route::get('/clientes', [ClienteController::class, 'index']); // Listar clientes
+    Route::get('/clientes/{ci}', [ClienteController::class, 'show']);
+    Route::put('/clientes/{ci}', [ClienteController::class, 'update']);
+    Route::delete('/clientes/{ci}', [ClienteController::class, 'destroy']); // Eliminar cliente
+    Route::post('/clientes', [ClienteController::class, 'store']);
 
 
+    // Rutas para pedidos
+    Route::get('/pedidos', [PedidoController::class, 'index']); // Listar pedidos
+    Route::get('/pedidos/{id}', [PedidoController::class, 'show']); // Mostrar un pedido
+    Route::put('/pedidos/{id}/mark-as-status', [PedidoController::class, 'markAsStatus']); // Cambiar estado del pedido
+});
 
-
-
-
-
-
-
-
-
-
-
-// Rutas de la API para clientes
-Route::get('/api/clientes', [ClienteController::class, 'index']); // Obtener todos los clie
-
-
-Route::post('/api/clientes', [ClienteController::class, 'store']);
-
-Route::put('/api/clientes/{ci}', [ClienteController::class, 'update']); // Actualizar un cliente
-Route::delete('/api/clientes/{ci}', [ClienteController::class, 'destroy']); // Eliminar un cliente
-
-
-
-
-
-
-// Ruta para obtener todos los pedidos
-Route::get('/api/pedidos', [PedidoController::class, 'index']);
-
-// Ruta para obtener un pedido específico por ID
-Route::get('/api/pedidos/{id}', [PedidoController::class, 'show']);
-
-// Ruta para marcar un pedido como en proceso
-Route::put('/api/pedidos/{id}/mark-as-status', [PedidoController::class, 'markAsStatus']);
-
-// Otras rutas de vista
+// === RUTAS DE VISTAS ===
+// Página principal
 Route::view('/index', 'index')->name('index');
-Route::view('/login', 'login')->name('login');
-Route::view('/confirmacion', 'confirmacion')->name('confirmacion');
-Route::view('/historial', 'historial')->name('historial');
-Route::view('/comentarios', 'comentarios')->name('comentarios');
-Route::view('/catalogo', 'catalogo')->name('catalogo');
-Route::view('/indexlog', 'indexlog')->name('indexlog');
-Route::view('/empleado', 'empleado')->name('empleado');
-Route::view('/iniempleado', 'iniempleado')->name('iniempleado');
-Route::view('/admin', 'admin')->name('admin');
-Route::view('/recu', 'recu')->name('recu');
-Route::view('/productos', 'productos')->name('productos');
-Route::view('/pedidos', 'pedidos')->name('pedidos');
-Route::view('/reportes', 'reportes')->name('reportes');
-Route::view('/clientes', 'clientes')->name('clientes');
-Route::view('/registro', 'registro')->name('registro');
 
-Route::view('/cambi_contra', 'cambi_contra')->name('cambi_contra');
+// Rutas de autenticación
+Route::view('/login', 'login')->name('login'); // Página de login
+Route::view('/recu', 'recu')->name('recu'); // Recuperación de contraseña
+Route::view('/registro', 'registro')->name('registro'); // Registro de usuarios
+
+// Rutas para funcionalidades de clientes
+Route::view('/confirmacion', 'confirmacion')->name('confirmacion'); // Confirmar pedidos
+Route::view('/historial', 'historial')->name('historial'); // Ver historial de pedidos
+Route::view('/catalogo', 'catalogo')->name('catalogo'); // Mostrar catálogo
+
+// Rutas para empleados y clientes
+Route::view('/login', 'login')->name('login'); // Página de inicio (logeada)
+Route::view('/empleado', 'empleado')->name('empleado'); // Gestión de empleados
+Route::view('/clientes', 'clientes')->name('clientes'); // Gestión de clientes
+
+// Rutas para reportes y productos administrados
+Route::view('/productos', 'productos')->name('productos'); // Mostrar productos
+Route::view('/pedidos', 'pedidos')->name('pedidos'); // Listar pedidos
+Route::view('/reportes', 'reportes')->name('reportes'); // Generar o mostrar reportes
+
+// Cambio de contraseña
+Route::view('/cambi_contra', 'cambi_contra')->name('cambi_contra'); // Cambiar contraseña

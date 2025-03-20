@@ -84,87 +84,10 @@
 
     </x-footer>
 
+    @vite(['resources/css/confirmacion.css','resources/js/confirmacion.js'])
 
     <!-- Script para manejar el formulario de confirmación -->
-    <script>
-    const cartItems = [{
-            name: "Café",
-            price: 2.00,
-            quantity: 1
-        },
-        {
-            name: "Empanada",
-            price: 3.00,
-            quantity: 1
-        },
-        {
-            name: "Sandwich",
-            price: 5.00,
-            quantity: 1
-        }
-    ];
-
-    function displayCartItems() {
-        const cartItemsList = document.getElementById('cartItems');
-        cartItemsList.innerHTML = '';
-        let total = 0;
-
-        cartItems.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-                    ${item.name} - $${item.price.toFixed(2)} x 
-                    <input type="number" value="${item.quantity}" min="1" data-index="${index}" class="quantity-input"> 
-                    <button type="button" data-index="${index}" class="btn eliminar" onclick="removeItem(${index})">Eliminar</button>
-                `;
-            cartItemsList.appendChild(listItem);
-            total += item.price * item.quantity;
-        });
-
-        document.getElementById('totalPedido').innerText = total.toFixed(2);
-    }
-
-    function removeItem(index) {
-        cartItems.splice(index, 1);
-        displayCartItems();
-    }
-
-    document.getElementById('confirmOrderForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const orderNumber = Math.floor(Math.random() * 1000000);
-        const confirmationMessage = document.getElementById('confirmationMessage');
-        confirmationMessage.innerHTML =
-            `¡Felicidades! Tu pedido ha sido confirmado. Tu número de pedido es <strong>${orderNumber}</strong>.`;
-        confirmationMessage.classList.remove('hidden');
-        document.getElementById('confirmOrderForm').classList.add('hidden');
-    });
-
-    document.getElementById('cartItems').addEventListener('input', function(event) {
-        if (event.target.classList.contains('quantity-input')) {
-            const index = event.target.dataset.index;
-            cartItems[index].quantity = parseInt(event.target.value, 10);
-            displayCartItems();
-        }
-    });
-
-    document.getElementById('metodoPago').addEventListener('change', function(event) {
-        const metodoPago = event.target.value;
-        const pagoMovilForm = document.getElementById('pagoMovilForm');
-        if (metodoPago === 'pago-movil') {
-            pagoMovilForm.classList.remove('hidden');
-        } else {
-            pagoMovilForm.classList.add('hidden');
-        }
-    });
-
-    function cancelOrder() {
-
-        // Aquí puedes agregar la lógica para cancelar el pedido
-        location.href = "{{ route('catalogo') }}"; // Redirigir al inicio
-    }
-
-    // Mostrar los productos del carrito al cargar la página
-    displayCartItems();
-    </script>
+  
 </body>
 
 </html>
