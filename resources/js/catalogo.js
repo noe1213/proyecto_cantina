@@ -25,51 +25,72 @@ document.addEventListener("DOMContentLoaded", () => {
 // Función para obtener productos desde el backend
 function obtenerProductosParaCatalogo() {
     fetch("http://127.0.0.1:8000/api/productos")
-        .then(response => {
+        .then((response) => {
             if (!response.ok) {
-                throw new Error(`Error al obtener los productos: ${response.statusText}`);
+                throw new Error(
+                    `Error al obtener los productos: ${response.statusText}`
+                );
             }
             return response.json();
         })
-        .then(productos => {
+        .then((productos) => {
             console.log("Productos obtenidos del backend:", productos);
             renderizarCatalogoPorCategoria(productos);
         })
-        .catch(error => console.error("Error al cargar el catálogo:", error));
+        .catch((error) => console.error("Error al cargar el catálogo:", error));
 }
 
 // Función para renderizar el catálogo por categoría
 function renderizarCatalogoPorCategoria(productos) {
-    const categorias = ["Desayunos", "Bebidas", "Combos", "Almuerzos", "Chuches"];
-    categorias.forEach(categoria => {
+    const categorias = [
+        "Desayunos",
+        "Bebidas",
+        "Combos",
+        "Almuerzos",
+        "Chuches",
+    ];
+    categorias.forEach((categoria) => {
         const contenedor = document.getElementById(categoria.toLowerCase());
         if (!contenedor) {
-            console.warn(`No se encontró el contenedor para la categoría: ${categoria}`);
+            console.warn(
+                `No se encontró el contenedor para la categoría: ${categoria}`
+            );
             return;
         }
 
         const productosCategoria = productos.filter(
-            producto => producto.categoria_producto === categoria
+            (producto) => producto.categoria_producto === categoria
         );
 
-        productosCategoria.forEach(producto => {
-            const imgURL = producto.imagen || "http://127.0.0.1:8000/storage/imagenes/default.png";
+        productosCategoria.forEach((producto) => {
+            const imgURL =
+                producto.imagen ||
+                "http://127.0.0.1:8000/storage/imagenes/default.png";
 
             const productCard = document.createElement("div");
             productCard.className = "product";
 
             productCard.innerHTML = `
-                <img src="${imgURL}" alt="${producto.nombre_producto}" class="product-image">
+                <img src="data:image/jpeg;base64,${imgURL}" alt="${
+                producto.nombre_producto
+            }" class="product-image">
                 <h4>${producto.nombre_producto}</h4>
                 <p>Precio: $${producto.precio_producto.toFixed(2)}</p>
                 <label for="cantidad-${producto.id_producto}">Cantidad:</label>
-                <input type="number" id="cantidad-${producto.id_producto}" min="1" value="1">
+                <input type="number" id="cantidad-${
+                    producto.id_producto
+                }" min="1" value="1">
             `;
 
             const boton = document.createElement("button");
             boton.textContent = "Agregar al carrito";
             boton.addEventListener("click", () => {
-                agregarAlCarrito(producto.id_producto, producto.nombre_producto, producto.precio_producto, imgURL);
+                agregarAlCarrito(
+                    producto.id_producto,
+                    producto.nombre_producto,
+                    producto.precio_producto,
+                    imgURL
+                );
             });
 
             productCard.appendChild(boton);
@@ -83,7 +104,12 @@ let carrito = [];
 
 // Función para agregar un producto al carrito
 function agregarAlCarrito(id, nombre, precio, imagen) {
-    console.log("Agregar al carrito llamado con:", { id, nombre, precio, imagen });
+    console.log("Agregar al carrito llamado con:", {
+        id,
+        nombre,
+        precio,
+        imagen,
+    });
 
     const cantidadInput = document.getElementById(`cantidad-${id}`);
     const cantidad = parseInt(cantidadInput.value);
@@ -97,7 +123,7 @@ function agregarAlCarrito(id, nombre, precio, imagen) {
         return;
     }
 
-    const productoExistente = carrito.find(producto => producto.id === id);
+    const productoExistente = carrito.find((producto) => producto.id === id);
     if (productoExistente) {
         productoExistente.cantidad += cantidad;
     } else {
@@ -127,18 +153,21 @@ function actualizarCarritoVisual() {
     let totalItems = 0;
     let totalPrice = 0;
 
-    carrito.forEach(producto => {
+    carrito.forEach((producto) => {
         totalItems += producto.cantidad;
         totalPrice += producto.precio * producto.cantidad;
 
         const li = document.createElement("li");
         li.innerHTML = `
-            ${producto.nombre} - $${producto.precio.toFixed(2)} x ${producto.cantidad}
+            ${producto.nombre} - $${producto.precio.toFixed(2)} x ${
+            producto.cantidad
+        }
         `;
 
         const botonEliminar = document.createElement("button");
         botonEliminar.textContent = "✖";
-        botonEliminar.style = "margin-left: 10px; background: transparent; border: none; color: red; font-size: 16px; cursor: pointer;";
+        botonEliminar.style =
+            "margin-left: 10px; background: transparent; border: none; color: red; font-size: 16px; cursor: pointer;";
         botonEliminar.addEventListener("click", () => {
             eliminarDelCarrito(producto.id);
         });
@@ -162,9 +191,9 @@ function eliminarDelCarrito(id) {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar",
-    }).then(result => {
+    }).then((result) => {
         if (result.isConfirmed) {
-            carrito = carrito.filter(producto => producto.id !== id);
+            carrito = carrito.filter((producto) => producto.id !== id);
             actualizarCarritoVisual();
 
             Swal.fire({
@@ -201,7 +230,7 @@ function emptyCart() {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Sí, vaciar carrito",
         cancelButtonText: "Cancelar",
-    }).then(result => {
+    }).then((result) => {
         if (result.isConfirmed) {
             carrito = [];
             actualizarCarritoVisual();
@@ -227,7 +256,7 @@ function confirmarPedido() {
     }
 
     let totalPrice = 0;
-    carrito.forEach(producto => {
+    carrito.forEach((producto) => {
         totalPrice += producto.precio * producto.cantidad;
     });
 
@@ -240,7 +269,7 @@ function confirmarPedido() {
         cancelButtonColor: "#d33",
         confirmButtonText: "Confirmar",
         cancelButtonText: "Cancelar",
-    }).then(result => {
+    }).then((result) => {
         if (result.isConfirmed) {
             carrito = [];
             actualizarCarritoVisual();
@@ -248,7 +277,9 @@ function confirmarPedido() {
             Swal.fire({
                 icon: "success",
                 title: "Pedido confirmado",
-                text: `¡Gracias por tu compra! Total pagado: $${totalPrice.toFixed(2)}.`,
+                text: `¡Gracias por tu compra! Total pagado: $${totalPrice.toFixed(
+                    2
+                )}.`,
             });
 
             toggleCart();

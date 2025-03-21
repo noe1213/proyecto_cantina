@@ -261,7 +261,7 @@ function addProductToTable(product) {
         <td>
             ${
                 product.imagen
-                    ? `<img src="${product.imagen}" alt="Imagen del Producto" width="50">`
+                    ? `<img src="data:image/jpeg;base64,${product.imagen}" alt="Imagen del Producto" width="50">`
                     : "Sin Imagen"
             }
         </td>
@@ -284,6 +284,11 @@ document
         event.preventDefault();
 
         const formData = new FormData(this);
+
+        // Agregar la imagen en Base64 al formulario si está disponible
+        if (window.imageBase64) {
+            formData.append("imagen_base64", window.imageBase64);
+        }
 
         fetch("/api/productos", {
             method: "POST",
@@ -341,29 +346,76 @@ function clearForm() {
     const form = document.getElementById("product-form");
     form.reset();
     document.getElementById("image_preview").style.display = "none";
+    window.imageBase64 = null; // Limpiar la variable global de Base64
 }
 
-// Vista previa de la imagen al agregar
+// Función para obtener la imagen en Base64
 function previewImage(event) {
     const file = event.target.files[0];
+
+    // Verificar si el archivo es una imagen válida
     if (!file || !file.type.startsWith("image/")) {
         Swal.fire(
             "Error",
             "Por favor selecciona un archivo de imagen válido.",
             "error"
         );
-        event.target.value = "";
+        event.target.value = ""; // Limpiar el input
         return;
     }
 
     const reader = new FileReader();
+
+    // Definir la función onload para cuando se lea el archivo
     reader.onload = function (e) {
         const imagePreview = document.getElementById("image_preview");
-        imagePreview.src = e.target.result;
+        imagePreview.src = e.target.result; // Mostrar la vista previa de la imagen
         imagePreview.style.display = "block";
+
+        // Guardar el Base64 en una variable global
+        window.imageBase64 = e.target.result.split(",")[1]; // Extraer solo la parte Base64
     };
+
+    // Leer el archivo como una URL de datos (Data URL)
     reader.readAsDataURL(file);
 }
+
+// Asignar la función al objeto window para asegurar que esté disponible globalmente
+window.previewImage = previewImage;
+
+// Función para obtener la imagen en Base64 en el modal de edición
+function previewEditImage(event) {
+    const file = event.target.files[0];
+
+    // Verificar si el archivo es una imagen válida
+    if (!file || !file.type.startsWith("image/")) {
+        Swal.fire(
+            "Error",
+            "Por favor selecciona un archivo de imagen válido.",
+            "error"
+        );
+        event.target.value = ""; // Limpiar el input
+        return;
+    }
+
+    const reader = new FileReader();
+
+    // Definir la función onload para cuando se lea el archivo
+    reader.onload = function (e) {
+        const imagePreview = document.getElementById("edit_image_preview");
+        imagePreview.src = e.target.result; // Mostrar la vista previa de la imagen
+        imagePreview.style.display = "block";
+
+        // Guardar el Base64 en una variable global
+        window.editImageBase64 = e.target.result.split(",")[1]; // Extraer solo la parte Base64
+    };
+
+    // Leer el archivo como una URL de datos (Data URL)
+    reader.readAsDataURL(file);
+}
+
+// Asignar la función al objeto window para asegurar que esté disponible globalmente
+window.previewEditImage = previewEditImage;
 
 // Editar producto
 function editProduct(id_producto) {
@@ -392,7 +444,7 @@ function openEditModal(product) {
 
     const imagePreview = document.getElementById("edit_image_preview");
     if (product.imagen) {
-        imagePreview.src = `/storage/${product.imagen}`;
+        imagePreview.src = `data:image/jpeg;base64,${product.imagen}`;
         imagePreview.style.display = "block";
     } else {
         imagePreview.style.display = "none";
@@ -425,6 +477,11 @@ document
                 const formData = new FormData(this);
                 const productId =
                     document.getElementById("edit_product_id").value;
+
+                // Agregar la imagen en Base64 al formulario si está disponible
+                if (window.editImageBase64) {
+                    formData.append("imagen_base64", window.editImageBase64);
+                }
 
                 fetch(`/api/productos/${productId}`, {
                     method: "POST",
@@ -484,7 +541,7 @@ function updateTableRow(updatedProduct) {
             <td>${updatedProduct.stock_minimo}</td>
             <td>${
                 updatedProduct.imagen
-                    ? `<img src="/storage/${updatedProduct.imagen}" alt="Imagen del Producto" width="50">`
+                    ? `<img src="data:image/jpeg;base64,${updatedProduct.imagen}" alt="Imagen del Producto" width="50">`
                     : "Sin Imagen"
             }</td>
             <td>

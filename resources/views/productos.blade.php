@@ -117,7 +117,7 @@
                             onclick="document.getElementById('edit_imagen_producto').click();">Subir Imagen</button>
                         <input type="file" id="edit_imagen_producto" name="imagen_producto" accept="image/*"
                             onchange="previewEditImage(event)" style="display:none;">
-
+                        <!-- Vista previa de la imagen -->
                         <img id="edit_image_preview" src="" alt="Vista previa"
                             style="margin-top:10px; max-width:100%; border-radius:4px; display:none;">
                     </div>
