@@ -3,8 +3,7 @@ import Swal from "sweetalert2";
 // Inicializar la tabla de productos y verificar notificaciones al cargar la página
 window.onload = () => {
     fetchProducts();
-     
-}; 
+};
 
 // Función para cerrar cualquier modal
 function closeModal(modalId) {
@@ -81,7 +80,8 @@ function markAsStatus(pedidoId, estado) {
                 return response.json(); // Convertir la respuesta a JSON
             })
             .then((data) => {
-                alert(data.message); // Mostrar mensaje de éxito
+                Swal.fire("¡Éxito!", `${data.message}`, "success");
+                //alert(data.message); // Mostrar mensaje de éxito
                 closeModal("pedidoModal"); // Cerrar el modal
 
                 fetchPedidos(); // Volver a cargar los pedidos
