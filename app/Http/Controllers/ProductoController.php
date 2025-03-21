@@ -13,22 +13,22 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         $query = Producto::query();
-    
+
         if ($request->has('categoria')) {
             $query->where('categoria_producto', $request->categoria);
         }
-    
+
         $productos = $query->get();
-    
+
         return response()->json($productos, 200);
     }
-    
+
     // Almacenar un nuevo producto (POST)
     public function store(Request $request)
     {
         // Mensajes de error personalizados
         $messages = [
-            'nombre_producto' => 'El producto debe ser unico',
+            'nombre_producto' => 'El producto debe ser único',
             'nombre_producto.required' => 'El nombre del producto es obligatorio.',
             'precio_producto.required' => 'El precio del producto es obligatorio.',
             'precio_producto.numeric' => 'El precio debe ser un número válido.',
@@ -51,12 +51,21 @@ class ProductoController extends Controller
                 'stock_producto' => 'required|integer',
                 'stock_minimo' => 'required|integer|lt:stock_producto',
                 'imagen_producto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'imagen_base64' => 'nullable|string', // Nuevo campo para la imagen en Base64
             ], $messages);
 
-            // Subir la imagen (si existe)
-            $rutaImagen = null;
+            // Variable para almacenar la imagen en Base64
+            $imagenBase64 = null;
+
+            // Si se envía la imagen como archivo, convertirla a Base64
             if ($request->hasFile('imagen_producto')) {
-                $rutaImagen = $request->file('imagen_producto')->store('imagenes_productos', 'public');
+                $imagen = $request->file('imagen_producto');
+                $imagenBase64 = base64_encode(file_get_contents($imagen->getRealPath()));
+            }
+
+            // Si se envía la imagen como Base64, usarla directamente
+            if ($request->filled('imagen_base64')) {
+                $imagenBase64 = $request->input('imagen_base64');
             }
 
             // Crear producto
@@ -66,7 +75,7 @@ class ProductoController extends Controller
                 'categoria_producto' => $request->categoria_producto,
                 'stock_producto' => $request->stock_producto,
                 'stock_minimo' => $request->stock_minimo,
-                'imagen' => $rutaImagen,
+                'imagen' => $imagenBase64, // Guardar la imagen en Base64
             ]);
 
             return response()->json($producto, 201);
@@ -77,24 +86,24 @@ class ProductoController extends Controller
         }
     }
     public function obtenerStockBajo()
-{
-    $productosBajosStock = Producto::whereColumn('stock_producto', '<', 'stock_minimo')
-        ->select('id_producto', 'nombre_producto', 'stock_producto', 'stock_minimo')
-        ->get();
+    {
+        $productosBajosStock = Producto::whereColumn('stock_producto', '<', 'stock_minimo')
+            ->select('id_producto', 'nombre_producto', 'stock_producto', 'stock_minimo')
+            ->get();
 
-    // Filtrar productos que no tengan nombre
-    $productosValidos = $productosBajosStock->filter(function ($producto) {
-        return !empty($producto->nombre_producto); // Solo incluye productos con nombre
-    });
+        // Filtrar productos que no tengan nombre
+        $productosValidos = $productosBajosStock->filter(function ($producto) {
+            return !empty($producto->nombre_producto); // Solo incluye productos con nombre
+        });
 
-    return response()->json($productosValidos, 200);
-}
+        return response()->json($productosValidos, 200);
+    }
 
 
-    
 
-    
-    
+
+
+
     // Obtener un producto específico (GET)
     public function show($id_producto)
     {
@@ -110,6 +119,7 @@ class ProductoController extends Controller
     // Actualizar un producto (PUT)
     public function update(Request $request, $id_producto)
     {
+        // Mensajes de error personalizados
         $messages = [
             'nombre_producto.required' => 'El nombre del producto es obligatorio.',
             'precio_producto.required' => 'El precio del producto es obligatorio.',
@@ -137,17 +147,23 @@ class ProductoController extends Controller
                 'precio_producto' => 'required|numeric',
                 'categoria_producto' => 'required|string|max:255',
                 'stock_producto' => 'required|integer',
-            
+                'stock_minimo' => 'required|integer|lt:stock_producto',
                 'imagen_producto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'imagen_base64' => 'nullable|string', // Nuevo campo para la imagen en Base64
             ], $messages);
 
-            // Actualizar imagen si es necesario
-            if ($request->hasFile('imagen_producto')) {
-                if ($producto->imagen) {
-                    Storage::disk('public')->delete($producto->imagen);
-                }
+            // Variable para almacenar la imagen en Base64
+            $imagenBase64 = $producto->imagen; // Mantener la imagen actual por defecto
 
-                $producto->imagen = $request->file('imagen_producto')->store('imagenes_productos', 'public');
+            // Si se envía la imagen como archivo, convertirla a Base64
+            if ($request->hasFile('imagen_producto')) {
+                $imagen = $request->file('imagen_producto');
+                $imagenBase64 = base64_encode(file_get_contents($imagen->getRealPath()));
+            }
+
+            // Si se envía la imagen como Base64, usarla directamente
+            if ($request->filled('imagen_base64')) {
+                $imagenBase64 = $request->input('imagen_base64');
             }
 
             // Actualizar datos del producto
@@ -157,7 +173,7 @@ class ProductoController extends Controller
                 'categoria_producto' => $request->categoria_producto,
                 'stock_producto' => $request->stock_producto,
                 'stock_minimo' => $request->stock_minimo,
-                'imagen' => $producto->imagen,
+                'imagen' => $imagenBase64, // Guardar la imagen en Base64
             ]);
 
             return response()->json($producto, 200);
@@ -192,25 +208,20 @@ class ProductoController extends Controller
     }
     public function obtenerProductosPorCategoria()
     {
-        $productos = Producto::select('id_producto', 'nombre_producto', 'precio_producto', 'categoria_producto', 'imagen')->get();
+        $productos = Producto::select('id_producto', 'nombre_producto', 'precio_producto', 'categoria_producto', 'imagen', 'stock_producto', 'stock_minimo')->get();
         \Log::info('JSON final: ', ['productos' => $productos]);
 
 
-        foreach ($productos as $producto) {
-            if ($producto->imagen) {
-                // Convierte la ruta relativa en una URL completa
-                $producto->imagen = asset('storage/' . $producto->imagen);
-            } else {
-                // Imagen predeterminada
-                $producto->imagen = asset('storage/imagenes/default.png');
-            }
-        }
-    
+        // foreach ($productos as $producto) {
+        //     if ($producto->imagen) {
+        //         // Convierte la ruta relativa en una URL completa
+        //         $producto->imagen = asset('storage/' . $producto->imagen);
+        //     } else {
+        //         // Imagen predeterminada
+        //         $producto->imagen = asset('storage/imagenes/default.png');
+        //     }
+        // }
+
         return response()->json($productos, 200);
     }
-    
-    
-    
-
 }
-

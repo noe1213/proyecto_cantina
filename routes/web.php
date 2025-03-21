@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\AuthClienteController;
+use App\Http\Controllers\AuthController;
 
 // === RUTAS DE LA API ===
 Route::prefix('api')->group(function () {
@@ -23,36 +25,57 @@ Route::prefix('api')->group(function () {
     Route::delete('/clientes/{ci}', [ClienteController::class, 'destroy']); // Eliminar cliente
     Route::post('/clientes', [ClienteController::class, 'store']);
 
-
     // Rutas para pedidos
     Route::get('/pedidos', [PedidoController::class, 'index']); // Listar pedidos
     Route::get('/pedidos/{id}', [PedidoController::class, 'show']); // Mostrar un pedido
     Route::put('/pedidos/{id}/mark-as-status', [PedidoController::class, 'markAsStatus']); // Cambiar estado del pedido
 });
 
-// === RUTAS DE VISTAS ===
-// Página principal
+// === RUTAS PÚBLICAS (acceso sin autenticación) ===
 Route::view('/index', 'index')->name('index');
 
-// Rutas de autenticación
-Route::view('/login', 'login')->name('login'); // Página de login
-Route::view('/recu', 'recu')->name('recu'); // Recuperación de contraseña
-Route::view('/registro', 'registro')->name('registro'); // Registro de usuarios
+// Rutas de autenticación (solo para invitados)
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [AuthClienteController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthClienteController::class, 'login'])->name('login.post');
+    Route::view('/registro', 'registro')->name('registro');
+    Route::view('/recu', 'recu')->name('recu');
+});
 
-// Rutas para funcionalidades de clientes
-Route::view('/confirmacion', 'confirmacion')->name('confirmacion'); // Confirmar pedidos
-Route::view('/historial', 'historial')->name('historial'); // Ver historial de pedidos
-Route::view('/catalogo', 'catalogo')->name('catalogo'); // Mostrar catálogo
+// === RUTAS PROTEGIDAS (requieren autenticación) ===
+Route::middleware(['auth:cliente'])->group(function () {
+    // Cerrar sesión
+    Route::post('/logout', [AuthClienteController::class, 'logout'])->name('logout');
 
-// Rutas para empleados y clientes
-Route::view('/login', 'login')->name('login'); // Página de inicio (logeada)
-Route::view('/empleado', 'empleado')->name('empleado'); // Gestión de empleados
-Route::view('/clientes', 'clientes')->name('clientes'); // Gestión de clientes
+    // Funcionalidades de clientes
+    Route::view('/confirmacion', 'confirmacion')->name('confirmacion');
+    Route::view('/historial', 'historial')->name('historial');
+    Route::view('/catalogo', 'catalogo')->name('catalogo');
+    Route::view('/cambi_contra', 'cambi_contra')->name('cambi_contra');
 
-// Rutas para reportes y productos administrados
-Route::view('/productos', 'productos')->name('productos'); // Mostrar productos
-Route::view('/pedidos', 'pedidos')->name('pedidos'); // Listar pedidos
-Route::view('/reportes', 'reportes')->name('reportes'); // Generar o mostrar reportes
+    // Rutas de gestión (protegidas)
+    Route::view('/empleado', 'empleado')->name('empleado');
+    Route::view('/clientes', 'clientes')->name('clientes');
+    Route::view('/productos', 'productos')->name('productos');
+    Route::view('/pedidos', 'pedidos')->name('pedidos');
+    Route::view('/reportes', 'reportes')->name('reportes');
+});
 
-// Cambio de contraseña
-Route::view('/cambi_contra', 'cambi_contra')->name('cambi_contra'); // Cambiar contraseña
+// === RUTAS PROTEGIDAS PARA USUARIOS (ADMINISTRADORES) ===
+// Route::middleware(['auth'])->group(function () {
+//     // Cerrar sesión
+//     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+//     // Funcionalidades de clientes
+//     Route::view('/confirmacion', 'confirmacion')->name('confirmacion');
+//     Route::view('/historial', 'historial')->name('historial');
+//     Route::view('/catalogo', 'catalogo')->name('catalogo');
+//     Route::view('/cambi_contra', 'cambi_contra')->name('cambi_contra');
+
+//     // Rutas de gestión (protegidas)
+//     Route::view('/empleado', 'empleado')->name('empleado');
+//     Route::view('/clientes', 'clientes')->name('clientes');
+//     Route::view('/productos', 'productos')->name('productos');
+//     Route::view('/pedidos', 'pedidos')->name('pedidos');
+//     Route::view('/reportes', 'reportes')->name('reportes');
+// });

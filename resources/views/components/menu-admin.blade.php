@@ -10,7 +10,15 @@
                     menú</a></li>
             <li><a href="{{ route('pedidos') }}"><i class="fas fa-utensils"></i> Pedidos
                     registrados</a></li>
-            <li><a href="{{ route('index') }}"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <!-- Token CSRF para seguridad -->
+                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i> Salir
+                    </button>
+                </form>
+            </li>
         </ul>
     </aside>
 </div>

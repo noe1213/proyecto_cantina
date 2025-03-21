@@ -40,6 +40,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+
+        // Guard para clientes
+        'cliente' => [
+            'driver' => 'session',
+            'provider' => 'clientes', // Proveedor asociado
+        ],
     ],
 
     /*
@@ -62,13 +74,14 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        // Proveedor para clientes
+        'clientes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Cliente::class, // Modelo Cliente
+        ],
     ],
 
     /*
